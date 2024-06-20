@@ -1,0 +1,57 @@
+import { initReactI18next } from 'react-i18next';
+import i18n from 'i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
+
+export enum Locale {
+  enUS = 'en-US',
+  zhCN = 'zh-CN',
+}
+
+export const supportedLngs = [Locale.enUS, Locale.zhCN];
+
+export const languageDetector = new LanguageDetector(null, {
+  order: ['cookie', 'navigator'],
+  lookupCookie: 'lang',
+  caches: ['cookie'],
+});
+
+i18n
+  .use(languageDetector)
+  .use(initReactI18next)
+  .init({
+    fallbackLng: Locale.enUS,
+    supportedLngs: [Locale.enUS, Locale.zhCN],
+    interpolation: {
+      escapeValue: false, // not needed for react!!
+    },
+  });
+
+export { i18n };
+
+export async function loadNamespaces(
+  namespaces: string[] | string,
+  lng?: string,
+) {
+  let currentLng: string | undefined = lng;
+  if (currentLng === undefined) {
+    const languages = languageDetector.detect() ?? Locale.enUS;
+    currentLng = Array.isArray(languages) ? languages[0] : languages;
+  }
+
+  const namespacesArray = Array.isArray(namespaces) ? namespaces : [namespaces];
+  await Promise.allSettled(
+    namespacesArray
+      .filter(ns => {
+        return !i18n.hasResourceBundle(currentLng!, ns);
+      })
+      .map(ns =>
+        fetch(`/locales/${currentLng!}/${ns}.json`).then(async res => {
+          if (res.ok) {
+            const resource = await res.json();
+            i18n.addResourceBundle(currentLng!, ns, resource);
+            return true;
+          }
+        }),
+      ),
+  );
+}

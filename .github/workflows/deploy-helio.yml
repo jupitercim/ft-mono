@@ -1,0 +1,212 @@
+name: Deploy Helio
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: Target
+        required: true
+        options:
+          - TESTING # https://lista-testing.dev.helio.money/cdp/
+          - STAGING # https://lista-staging.dev.helio.money/cdp/
+          - PROD # https://lista.org/cdp/
+      api:
+        type: choice
+        description: API
+        required: true
+        options:
+          - TESTING
+          - STAGING
+          - PROD
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
+
+env:
+  DEV_ACCOUNT: 894502716853
+  PROD_ACCOUNT: 233113543036
+  DEV_S3_BUCKET: 'tmp-dev-lista.helio.money'
+  STAGE_S3_BUCKET: 'tmp-stage-lista.helio.money'
+  PROD_S3_BUCKET: 'lista-org'
+  DEV_REGION: 'us-east-1'
+  PROD_REGION: 'ap-southeast-1'
+  DEV_CFN_ID: 'E3S9VM4JSI09J3'
+  STAGE_CFN_ID: 'E3S9VM4JSI09J3'
+  PROD_CFN_ID: 'ETOTNBCDPI0KS'
+  PROD_CFN_ID_1: 'EEL5KTD5WEEMA'
+
+jobs:
+  check-if-helio-deploy:
+    outputs:
+      should_deploy: ${{ steps.check.outputs.should_deploy }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check for changes in /apps/helio directory
+        id: check-changes
+        run: |
+          git fetch origin ${{ github.base_ref }}
+          CHANGES=$(git diff --quiet HEAD origin/${{ github.base_ref }} -- ./apps/helio || echo 'changes')
+          if [ "$CHANGES" = "changes" ]; then
+            echo "DIR_CHANGED=true" >> $GITHUB_ENV
+          fi
+
+      - name: Check deploy condition for workflow dispatch
+        id: check
+        run: |
+          LABELS="${{ join(github.event.pull_request.labels.*.name, '') }}"
+          if [[ "${{ env.DIR_CHANGED }}" == 'true' && \
+               ( "$LABELS" =~ "deploy"  || \
+               "${{ github.event_name }}" == 'workflow_dispatch' )
+             ]]; then
+            echo "::set-output name=should_deploy::true"
+          fi
+  deploy:
+    needs: check-if-helio-deploy
+    if: needs.check-if-helio-deploy.outputs.should_deploy == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+      packages: write
+
+    steps:
+      - name: Check deploy condition for workflow dispatch
+        if: github.event_name == 'workflow_dispatch'
+        id: workflow_dispatch_check
+        run: |
+          echo "ENVIRONMENT=${{ github.event.inputs.environment }}" >> $GITHUB_ENV
+          echo "API=${{ github.event.inputs.api }}" >> $GITHUB_ENV
+
+      - name: Check deploy condition for pull request
+        if: github.event_name == 'pull_request'
+        id: pull_request_check
+        run: |
+          LABELS="${{ join(github.event.pull_request.labels.*.name, '') }}"
+          if [[ "$LABELS" =~ "deploy" ]]; then
+            echo "ENVIRONMENT=TESTING" >> $GITHUB_ENV
+            echo "API=TESTING" >> $GITHUB_ENV
+          fi
+      - name: Export Variables for PROD
+        if: env.ENVIRONMENT == 'PROD'
+        run: |
+          echo "AWS_ACCOUNT=${{ env.PROD_ACCOUNT }}" >> $GITHUB_ENV
+          echo "S3_BUCKET=${{ env.PROD_S3_BUCKET }}" >> $GITHUB_ENV
+          echo "AWS_REGION=${{ env.PROD_REGION }}" >> $GITHUB_ENV
+          echo "DISTRIBUTION_ID=${{ env.PROD_CFN_ID }}" >> $GITHUB_ENV
+          echo "DISTRIBUTION_ID_1=${{ env.PROD_CFN_ID_1 }}" >> $GITHUB_ENV
+
+      - name: Export Variables for TESTING
+        if: env.ENVIRONMENT == 'TESTING'
+        run: |
+          echo "AWS_ACCOUNT=${{ env.DEV_ACCOUNT }}" >> $GITHUB_ENV
+          echo "S3_BUCKET=${{ env.DEV_S3_BUCKET }}" >> $GITHUB_ENV
+          echo "AWS_REGION=${{ env.DEV_REGION }}" >> $GITHUB_ENV
+          echo "DISTRIBUTION_ID=${{ env.DEV_CFN_ID }}" >> $GITHUB_ENV
+
+      - name: Export Variables for STAGING
+        if: env.ENVIRONMENT == 'STAGING'
+        run: |
+          echo "AWS_ACCOUNT=${{ env.DEV_ACCOUNT }}" >> $GITHUB_ENV
+          echo "S3_BUCKET=${{ env.STAGE_S3_BUCKET }}" >> $GITHUB_ENV
+          echo "AWS_REGION=${{ env.DEV_REGION }}" >> $GITHUB_ENV
+          echo "DISTRIBUTION_ID=${{ env.STAGE_CFN_ID }}" >> $GITHUB_ENV
+      - name: check branch
+        run: |
+          echo "Branch: ${{ github.ref }}"
+          echo "Environment: ${{ env.ENVIRONMENT }}"
+          echo "Domain: ${{ env.API }}"
+      - uses: actions/checkout@v2
+      - uses: nelonoel/branch-name@v1.0.1
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.20'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+      - name: Restore cached node_modules
+        id: cache-primes-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-node_modules
+
+      # allow main branch and git tag to deploy to production
+      - name: Prevent wrong version releasing
+        if: ${{ env.ENVIRONMENT == 'PROD' && github.ref != 'refs/heads/main' && !startsWith(github.ref, 'refs/tags') }}
+        run: |
+          echo "Production deployment is possible only from the main branch and tags"
+          exit 1
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4 # More information on this action can be found below in the 'AWS Credentials' section
+        with:
+          role-to-assume: 'arn:aws:iam::${{ env.AWS_ACCOUNT }}:role/github-actions-role-frontend'
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build testing
+        working-directory: .
+        if: env.API == 'TESTING'
+        run: |
+          export NODE_OPTIONS="--max_old_space_size=4096"
+          pnpm turbo build:testing --filter helio
+
+      - name: Build staging
+        working-directory: .
+        if: env.API == 'STAGING'
+        run: |
+          export NODE_OPTIONS="--max_old_space_size=4096"
+          pnpm turbo build:staging --filter helio
+
+      - name: Build production
+        working-directory: .
+        if: env.API == 'PROD'
+        run: |
+          export NODE_OPTIONS="--max_old_space_size=4096"
+          pnpm turbo build:production --filter helio
+
+      - name: Copy files to the production website with the AWS CLI
+        working-directory: .
+        run: |
+          # Determine S3 target path
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            TARGET_PATH=""
+          else
+            TARGET_PATH="/${{ github.event.pull_request.number }}"
+          fi
+          echo "Target Path: $TARGET_PATH"
+          aws s3 sync ./apps/helio/build s3://${{ env.S3_BUCKET }}$TARGET_PATH/cdp \
+            --cache-control "public,max-age=600,s-maxage=3600" \
+            --exclude "[0-9]*/*"  \
+            --delete
+
+          aws configure set preview.cloudfront true
+          echo "Invalidating CDN network"
+          INVALIDATION_ID=`aws cloudfront create-invalidation \
+           --distribution-id ${{ env.DISTRIBUTION_ID}} \
+           --paths "/cdp*" | jq -r '.Invalidation.Id'`
+          echo "[lista.org] Invalidation ID is $INVALIDATION_ID"
+          echo "[lista.org] CDN Invalidation request is sent."
+
+          if [ -n "${{ env.DISTRIBUTION_ID_1 }}" ]; then
+            INVALIDATION_ID_1=`aws cloudfront create-invalidation \
+              --distribution-id ${{ env.DISTRIBUTION_ID_1}} \
+              --paths "/cdp*" | jq -r '.Invalidation.Id'`
+            echo "[lista.finance] Invalidation ID is $INVALIDATION_ID_1"
+            echo "[lista.finance] CDN Invalidation request is sent."
+          fi
+
+      - name: Save node_modules
+        id: cache-primes-save
+        uses: actions/cache/save@v3
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-node_modules

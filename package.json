@@ -1,0 +1,38 @@
+{
+  "name": "lista-mono",
+  "version": "0.0.1",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build:packages": "turbo run build --filter=./packages/*",
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx}\"",
+    "clean": "pnpm -r --parallel exec rimraf node_modules && pnpm exec rimraf node_modules",
+    "setup": "pnpm install -r && turbo run build --filter=./packages/* && pnpm install -r"
+  },
+  "devDependencies": {
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.2.204",
+    "eslint": "7.32.0",
+    "eslint-plugin-jsx-a11y": "6",
+    "prettier": "^2.8.8",
+    "rimraf": "^2.7.0",
+    "turbo": "1.13.3",
+    "typescript": "5.3.3"
+  },
+  "pnpm": {
+    "overrides": {
+      "react-error-overlay": "6.0.9",
+      "@types/react": "^18"
+    }
+  },
+  "engines": {
+    "node": ">=16",
+    "pnpm": ">=8"
+  }
+}

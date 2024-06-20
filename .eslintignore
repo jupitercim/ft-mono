@@ -1,0 +1,8 @@
+node_modules
+**/*.min.js
+!.eslintrc.js
+dist
+public
+next.config.js
+tsconfig.*
+**/vite.config.js

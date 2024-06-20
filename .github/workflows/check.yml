@@ -1,0 +1,39 @@
+name: Check build
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths:
+      - 'packages/**'
+      - '.github/workflows/*'
+      - 'apps/**'
+
+jobs:
+  build-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: nelonoel/branch-name@v1.0.1
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '21'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+      - name: Restore cached node_modules
+        id: cache-primes-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-node_modules
+
+      - name: Install dependencies
+        run: |
+          pnpm install
+
+      - name: Build
+        run: |
+          export NODE_OPTIONS="--max_old_space_size=4096"
+          pnpm run build
