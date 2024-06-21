@@ -32,33 +32,14 @@ declare module '@mui/material/Button' {
     tiny1: true;
   }
   interface ButtonPropsVariantOverrides {
-    menu: true;
-    dark: true;
-    brand1: true;
-    brand2: true;
-    brand3: true;
-    brand4: true;
-    tab: true;
-    outlined2: true;
+    ftNormal: true;
   }
 }
 
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
-    body: true;
-    body3: true;
-    body4: true;
-    body5: true;
-    body6: true;
-    body7: true;
-    body8: true;
-    subtitle3: true;
-    subtitle4: true;
-    subtitle5: true;
-    subtitle6: true;
-    subtitle7: true;
-    subtitle8: true;
-    subtitle9: true;
+    ftTitle: true;
+    ftSubtitle: true;
   }
 }
 

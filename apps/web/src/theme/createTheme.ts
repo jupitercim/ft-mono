@@ -51,6 +51,40 @@ export function createTheme(mode: PaletteMode): Theme {
       },
     },
 
-    components: {},
+    components: {
+      MuiTypography: {
+        styleOverrides: {
+          ftTitle: {
+            fontSize: '56px',
+            lineHeight: '56px',
+            color: baseTheme.colors.white,
+          },
+          ftSubtitle: {
+            fontSize: '24px',
+            lineHeight: '30px',
+            color: baseTheme.colors.gray1,
+          },
+        },
+      },
+      MuiButton: {
+        styleOverrides: {
+          ftNormal: {
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '22px',
+            lineHeight: '22px',
+            color: baseTheme.colors.white,
+            backgroundColor: baseTheme.colors.blue,
+            padding: '10px',
+            borderRadius: '25px',
+            textTransform: 'none',
+            ':hover': {
+              backgroundColor: baseTheme.colors.blue,
+            },
+          },
+        },
+      },
+    },
   });
 }

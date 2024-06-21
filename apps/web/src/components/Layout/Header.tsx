@@ -72,9 +72,9 @@ export function Header({ className }: Props): JSX.Element {
             'aria-labelledby': 'basic-button',
           }}
         >
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>My account</MenuItem>
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
+          <MenuItem onClick={handleClose}>English</MenuItem>
+          <MenuItem onClick={handleClose}>Dansk</MenuItem>
+          <MenuItem onClick={handleClose}>Japanese</MenuItem>
         </Menu>
       </Box>
     </header>
@@ -112,8 +112,11 @@ const useStyles = makeStyles()(theme => ({
       color: theme.colors.gray,
     },
 
-    '& > div': {
+    '& > div,a': {
       cursor: 'pointer',
+      '&:hover': {
+        color: theme.colors.blue,
+      },
     },
 
     '& .active': {
@@ -163,6 +166,7 @@ const useStyles = makeStyles()(theme => ({
 
   soccerMenu: {
     '&&': {
+      marginTop: '20px',
       backgroundColor: theme.colors.gray5,
     },
   },
