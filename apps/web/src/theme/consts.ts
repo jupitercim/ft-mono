@@ -3,6 +3,7 @@ import { SliderTypeMap } from '@mui/material';
 export const COLORS = {
   white: '#fff',
   bg: '#0E1015',
+  bg1: '#101319',
   red: '#FF2929',
   blue: '#28A7E8',
   gray: '#CDCDCD',

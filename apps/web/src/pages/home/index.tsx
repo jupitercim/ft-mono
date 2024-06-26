@@ -16,9 +16,15 @@ import missionBgSrc from '@/assets/images/mission-bg.png';
 import communityBgSrc from '@/assets/images/community-bg.png';
 import tgLogoSrc from '@/assets/images/tg-logo.png';
 import contactusBgSrc from '@/assets/images/contact-us-bg.png';
+import binanceLogoSrc from '@/assets/images/binance-1.png';
+import potroLogoSrc from '@/assets/images/fc-potro-1.png';
+import santosLogoSrc from '@/assets/images/santos-1.png';
+import alpineLogoSrc from '@/assets/images/alpine-1.png';
+import lazioLogoSrc from '@/assets/images/s.s.lazio-1.png';
 import { ContentSection } from '@/components/ContentSection';
 import { useTranslation } from 'react-i18next';
 import { ImgContent } from './components/ImgContent';
+import { ContactUs } from './components/ContactUs';
 
 export async function loader() {
   await loadNamespaces('home', 'en-US');
@@ -60,6 +66,29 @@ export const Component = () => {
     },
   ];
 
+  const partnerships = [
+    {
+      logo: binanceLogoSrc,
+      title: t('ps-binance'),
+    },
+    {
+      logo: lazioLogoSrc,
+      title: t('ps-lazio'),
+    },
+    {
+      logo: potroLogoSrc,
+      title: t('ps-potro'),
+    },
+    {
+      logo: santosLogoSrc,
+      title: t('ps-santos'),
+    },
+    {
+      logo: alpineLogoSrc,
+      title: t('ps-alpine'),
+    },
+  ];
+
   return (
     <Box>
       <Box className={classes.banner}>
@@ -93,7 +122,10 @@ export const Component = () => {
             ))}
           </Box>
         </ContentSection>
-        <ContentSection>
+        <ContentSection
+          className={classes.ourVision}
+          contentClassName={classes.ourVisionContent}
+        >
           <img className={classes.contactBg} src={contactusBgSrc} />
           <ImgContent
             imgSrc={visionBgSrc}
@@ -126,6 +158,28 @@ export const Component = () => {
             }
           />
         </ContentSection>
+        <ContentSection
+          title={t('partnershipNetwork')}
+          subtitle={t('partnershipNetworkSubtitle')}
+          contentClassName={classes.partnershipContent}
+        >
+          <Box className={classes.partnershipWrap}>
+            {partnerships.map(ps => (
+              <Box className={classes.partnership}>
+                <img src={ps.logo} />
+                <Typography className={classes.partnershipName}>
+                  {ps.title}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
+        </ContentSection>
+        <ContentSection title={t('event')} subtitle={t('eventSubtitle')}>
+          <Box className={classes.partnershipWrap}></Box>
+        </ContentSection>
+        <ContentSection title={t('contactUs')}>
+          <ContactUs />
+        </ContentSection>
       </Box>
     </Box>
   );
@@ -144,8 +198,8 @@ const useStyles = makeStyles()(theme => ({
     },
   },
   content: {
-    width: '1395px',
-    margin: '0 auto',
+    // width: '1395px',
+    // margin: '0 auto',
   },
   teamWrap: {
     display: 'grid',
@@ -194,6 +248,15 @@ const useStyles = makeStyles()(theme => ({
       color: theme.colors.white,
     },
   },
+  ourVision: {
+    width: '100%',
+    margin: '0',
+    backgroundColor: theme.colors.bg1,
+  },
+  ourVisionContent: {
+    width: '1395px',
+    margin: 'auto',
+  },
   contactBg: {
     width: '506px',
     position: 'absolute',
@@ -208,6 +271,28 @@ const useStyles = makeStyles()(theme => ({
         height: '30px',
         marginRight: '10px',
       },
+    },
+  },
+  partnershipContent: {
+    textAlign: 'center',
+  },
+  partnershipWrap: {
+    display: 'inline-flex',
+    gap: '102px',
+    marginTop: '100px',
+  },
+  partnership: {
+    img: {
+      width: '140px',
+      height: '140px',
+    },
+  },
+  partnershipName: {
+    '&&': {
+      marginTop: '24px',
+      fontSize: '26px',
+      lineHeight: '26px',
+      color: theme.colors.gray4,
     },
   },
 }));

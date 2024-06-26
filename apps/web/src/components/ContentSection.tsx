@@ -1,21 +1,21 @@
 import { Box, Typography } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
-import logoSrc from '@/assets/images/logo.png';
-import bannerBgSrc from '@/assets/images/banner-bg.png';
 import { ReactNode } from 'react';
 
 interface Props {
   title?: ReactNode;
   subtitle?: ReactNode;
+  className?: string;
+  contentClassName?: string;
   children: ReactNode | ReactNode[];
 }
 
 export const ContentSection = (props: Props) => {
   const { classes, cx } = useStyles();
-  const { title, subtitle, children } = props;
+  const { title, subtitle, className, contentClassName, children } = props;
 
   return (
-    <Box className={classes.content}>
+    <Box className={cx(classes.content, className)}>
       {title && (
         <Typography
           component="p"
@@ -36,13 +36,15 @@ export const ContentSection = (props: Props) => {
           {subtitle}
         </Typography>
       )}
-      <Box>{children}</Box>
+      <Box className={contentClassName}>{children}</Box>
     </Box>
   );
 };
 
 const useStyles = makeStyles()(theme => ({
   content: {
+    width: '1395px',
+    margin: '0 auto',
     paddingTop: '100px',
     paddingBottom: '120px',
     '> div': {
@@ -54,5 +56,10 @@ const useStyles = makeStyles()(theme => ({
       marginBottom: '40px',
     },
   },
-  subtitle: {},
+  subtitle: {
+    '&&': {
+      maxWidth: '680px',
+      margin: 'auto',
+    },
+  },
 }));
