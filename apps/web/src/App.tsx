@@ -9,7 +9,7 @@ import { ThemeProvider } from '@/theme';
 import { loadNamespaces } from './i18n';
 
 export const layoutLoader = async () => {
-  await loadNamespaces('layout', 'en-US');
+  await loadNamespaces('layout');
   return {};
 };
 

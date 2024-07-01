@@ -2,16 +2,13 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import {
-  Button,
   Drawer,
   List,
   ListItem,
   ListItemButton,
-  ListItemIcon,
   ListItemText,
   Menu,
   MenuItem,
-  useMediaQuery,
 } from '@mui/material';
 import Box from '@mui/material/Box';
 import { makeStyles } from 'tss-react/mui';
@@ -24,13 +21,20 @@ import contactUsSrc from '@/assets/images/ic-contact-us.png';
 import moreSrc from '@/assets/images/more.png';
 import closeSrc from '@/assets/images/close.png';
 import { useState } from 'react';
+import { Lang, useLanguage } from '@/hooks/useLanguage';
 
 interface Props {
   className?: string;
 }
 
+const languages: { label: string; value: Lang }[] = [
+  { label: 'English', value: 'en-US' },
+  { label: '日本語', value: 'jp' },
+];
+
 export function Header({ className }: Props): JSX.Element {
   const { t } = useTranslation('layout');
+  const [language, setLanguage] = useLanguage();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLImageElement>) => {
@@ -40,9 +44,12 @@ export function Header({ className }: Props): JSX.Element {
     setAnchorEl(null);
   };
 
-  const { classes, cx } = useStyles();
+  const handleLng = (lng: Lang) => {
+    setAnchorEl(null);
+    setLanguage(lng);
+  };
 
-  const isMobile = useMediaQuery('(max-width:1080px)');
+  const { classes, cx } = useStyles();
 
   const menus = [
     {
@@ -138,9 +145,15 @@ export function Header({ className }: Props): JSX.Element {
             'aria-labelledby': 'basic-button',
           }}
         >
-          <MenuItem onClick={handleClose}>English</MenuItem>
-          <MenuItem onClick={handleClose}>Dansk</MenuItem>
-          <MenuItem onClick={handleClose}>Japanese</MenuItem>
+          {languages.map(({ label, value }) => (
+            <MenuItem
+              className={cx({ active: value === language })}
+              key={label}
+              onClick={() => handleLng(value)}
+            >
+              {label}
+            </MenuItem>
+          ))}
         </Menu>
       </Box>
       <Box display="flex" alignItems="center" justifyContent="center">
@@ -280,6 +293,9 @@ const useStyles = makeStyles()(theme => ({
       backgroundColor: theme.colors.gray5,
       ul: {
         padding: '0',
+      },
+      '.active': {
+        color: theme.colors.blue,
       },
     },
   },

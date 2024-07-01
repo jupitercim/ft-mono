@@ -29,7 +29,7 @@ import { Paragraph } from '@/components/Paragraph';
 import { Events } from '@/components/Events';
 
 export async function loader() {
-  await loadNamespaces('home', 'en-US');
+  await loadNamespaces('home');
   return {};
 }
 

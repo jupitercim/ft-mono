@@ -9,7 +9,11 @@ import { languageDetector, Locale } from '@/i18n';
 
 export type Lang = `${Locale}` | '';
 
-function detectLanguage() {
+export function detectLanguage() {
+  const cookieLang = Cookies.get('lang');
+  if (cookieLang) {
+    return cookieLang as Lang;
+  }
   const languages = languageDetector.detect() ?? Locale.enUS;
   const lang = Array.isArray(languages) ? languages[0] : languages;
   return lang as Lang;

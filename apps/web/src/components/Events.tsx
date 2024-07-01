@@ -10,8 +10,6 @@ import notStartedBgSrc from '@/assets/images/not-started-bg.png';
 import endedBgSrc from '@/assets/images/ended-bg.png';
 import { ReactNode } from 'react';
 
-interface Props {}
-
 enum EventStatusEnum {
   Ongoing,
   NotStarted,
@@ -195,6 +193,7 @@ const useStyles = makeStyles()(theme => ({
       border: 'none',
       transition: 'all 200ms',
       color: 'transparent',
+      cursor: 'pointer',
     },
     li: {
       listStyle: 'none',
@@ -202,6 +201,7 @@ const useStyles = makeStyles()(theme => ({
         button: {
           width: '48px',
           backgroundColor: theme.colors.white,
+          cursor: 'default',
         },
       },
     },
