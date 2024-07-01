@@ -12,6 +12,7 @@ export const COLORS = {
   gray3: '#828488',
   gray4: '#A6A6A7',
   gray5: '#22262D',
+  gray6: '#ccc',
 };
 
 export type Colors = typeof COLORS;

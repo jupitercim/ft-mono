@@ -25,6 +25,8 @@ import { ContentSection } from '@/components/ContentSection';
 import { useTranslation } from 'react-i18next';
 import { ImgContent } from './components/ImgContent';
 import { ContactUs } from './components/ContactUs';
+import { Paragraph } from '@/components/Paragraph';
+import { Events } from '@/components/Events';
 
 export async function loader() {
   await loadNamespaces('home', 'en-US');
@@ -102,6 +104,7 @@ export const Component = () => {
           <Box className={classes.teamWrap}>
             {teams.map(team => (
               <Box
+                key={team.bg}
                 className={classes.team}
                 sx={{
                   backgroundImage: `url('${team.bg}')`,
@@ -130,12 +133,12 @@ export const Component = () => {
           <ImgContent
             imgSrc={visionBgSrc}
             title={t('ourVision')}
-            desc={t('ourVisionDesc')}
+            desc={<Paragraph iKey="ourVisionDesc" ns="home" />}
           />
           <ImgContent
             imgSrc={missionBgSrc}
             title={t('ourMission')}
-            desc={t('ourMissionDesc')}
+            desc={<Paragraph iKey="ourMissionDesc" ns="home" />}
             opposite
           />
           <ImgContent
@@ -143,7 +146,7 @@ export const Component = () => {
             title={t('community')}
             desc={
               <>
-                {t('communityDesc')}
+                <Paragraph iKey="communityDesc" ns="home" />
                 <Box>
                   <Button
                     variant="ftNormal"
@@ -165,7 +168,7 @@ export const Component = () => {
         >
           <Box className={classes.partnershipWrap}>
             {partnerships.map(ps => (
-              <Box className={classes.partnership}>
+              <Box key={ps.logo} className={classes.partnership}>
                 <img src={ps.logo} />
                 <Typography className={classes.partnershipName}>
                   {ps.title}
@@ -175,7 +178,7 @@ export const Component = () => {
           </Box>
         </ContentSection>
         <ContentSection title={t('event')} subtitle={t('eventSubtitle')}>
-          <Box className={classes.partnershipWrap}></Box>
+          <Events />
         </ContentSection>
         <ContentSection title={t('contactUs')}>
           <ContactUs />
@@ -196,6 +199,14 @@ const useStyles = makeStyles()(theme => ({
       width: 890,
       height: 410,
     },
+    [theme.breakpoints.down('md')]: {
+      padding: '20px 40px 44px 40px',
+      '& img': {
+        width: '100%',
+        height: 'auto',
+      },
+      backgroundPosition: 'center center',
+    },
   },
   content: {
     // width: '1395px',
@@ -207,7 +218,10 @@ const useStyles = makeStyles()(theme => ({
     gridTemplateColumns: '1fr 1fr 1fr 1fr',
     gap: '45px',
     [theme.breakpoints.down('md')]: {
+      marginTop: '68px',
       gridTemplateColumns: '1fr 1fr',
+      rowGap: '62px',
+      columnGap: '10px',
     },
   },
   team: {
@@ -221,6 +235,13 @@ const useStyles = makeStyles()(theme => ({
       height: '192px',
       marginTop: '-80px',
     },
+    [theme.breakpoints.down('md')]: {
+      img: {
+        width: '100px',
+        height: '100px',
+        marginTop: '-46px',
+      },
+    },
   },
   teamName: {
     '&&': {
@@ -229,6 +250,11 @@ const useStyles = makeStyles()(theme => ({
       lineHeight: '30px',
       marginTop: '8px',
       color: theme.colors.white,
+      [theme.breakpoints.down('md')]: {
+        fontSize: '16px',
+        lineHeight: '16px',
+        marginTop: '18px',
+      },
     },
   },
   teamToken: {
@@ -237,6 +263,11 @@ const useStyles = makeStyles()(theme => ({
       lineHeight: '20px',
       marginTop: '22px',
       color: theme.colors.gray1,
+      [theme.breakpoints.down('md')]: {
+        fontSize: '12px',
+        lineHeight: '12px',
+        marginTop: '10px',
+      },
     },
   },
   teamPrice: {
@@ -246,6 +277,12 @@ const useStyles = makeStyles()(theme => ({
       marginTop: '50px',
       marginBottom: '60px',
       color: theme.colors.white,
+      [theme.breakpoints.down('md')]: {
+        fontSize: '16px',
+        lineHeight: '16px',
+        marginTop: '22px',
+        marginBottom: '30px',
+      },
     },
   },
   ourVision: {
@@ -256,6 +293,9 @@ const useStyles = makeStyles()(theme => ({
   ourVisionContent: {
     width: '1395px',
     margin: 'auto',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+    },
   },
   contactBg: {
     width: '506px',
@@ -271,20 +311,47 @@ const useStyles = makeStyles()(theme => ({
         height: '30px',
         marginRight: '10px',
       },
+      [theme.breakpoints.down('md')]: {
+        marginTop: '20px',
+        img: {
+          width: '25px',
+          height: '25px',
+          marginRight: '8px',
+        },
+        fontSize: '20px',
+      },
     },
   },
   partnershipContent: {
     textAlign: 'center',
   },
   partnershipWrap: {
-    display: 'inline-flex',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(5, 1fr)',
     gap: '102px',
     marginTop: '100px',
+    [theme.breakpoints.down('md')]: {
+      gridTemplateColumns: 'repeat(6, 1fr)',
+      columnGap: '30px',
+      rowGap: '20px',
+      marginTop: '25px',
+      padding: '0 35px',
+    },
   },
   partnership: {
     img: {
       width: '140px',
       height: '140px',
+    },
+    [theme.breakpoints.down('md')]: {
+      gridColumn: 'span 2',
+      img: {
+        width: '70px',
+        height: '70px',
+      },
+      ':nth-last-child(2)': {
+        gridColumnEnd: '4',
+      },
     },
   },
   partnershipName: {
@@ -293,6 +360,11 @@ const useStyles = makeStyles()(theme => ({
       fontSize: '26px',
       lineHeight: '26px',
       color: theme.colors.gray4,
+      [theme.breakpoints.down('md')]: {
+        marginTop: '10px',
+        fontSize: '14px',
+        lineHeight: '14px',
+      },
     },
   },
 }));

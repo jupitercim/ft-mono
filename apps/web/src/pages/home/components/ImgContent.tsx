@@ -38,6 +38,14 @@ const useStyles = makeStyles()(theme => ({
     '&:last-child': {
       marginBottom: '0',
     },
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
+      gap: '20px',
+      marginBottom: '30px',
+      '&:last-child': {
+        marginBottom: '0',
+      },
+    },
   },
   contentAppend: {
     flexDirection: 'row-reverse',
@@ -68,9 +76,16 @@ const useStyles = makeStyles()(theme => ({
   },
   subtitle: {},
   desc: {
-    flex: 1,
-    paddingTop: '30px',
-    fontSize: '16px',
-    lineHeight: '22px',
+    '&&': {
+      flex: 1,
+      paddingTop: '30px',
+      fontSize: '16px',
+      lineHeight: '22px',
+      [theme.breakpoints.down('md')]: {
+        fontSize: '14px',
+        lineHeight: '18px',
+        paddingTop: '0',
+      },
+    },
   },
 }));

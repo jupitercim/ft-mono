@@ -50,16 +50,29 @@ const useStyles = makeStyles()(theme => ({
     '> div': {
       position: 'relative',
     },
+    [theme.breakpoints.down('md')]: {
+      padding: '25px 15px 30px 15px',
+      width: '100%',
+    },
   },
   title: {
     '&&': {
       marginBottom: '40px',
+      [theme.breakpoints.down('md')]: {
+        fontSize: '26px',
+        lineHeight: '30px',
+        marginBottom: '10px',
+      },
     },
   },
   subtitle: {
     '&&': {
       maxWidth: '680px',
       margin: 'auto',
+      [theme.breakpoints.down('md')]: {
+        fontSize: '14px',
+        lineHeight: '20px',
+      },
     },
   },
 }));

@@ -1,11 +1,28 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
-import { Button, Menu, MenuItem, useMediaQuery } from '@mui/material';
+import {
+  Button,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+  useMediaQuery,
+} from '@mui/material';
 import Box from '@mui/material/Box';
 import { makeStyles } from 'tss-react/mui';
 import logoTopSrc from '@/assets/images/logo-top.png';
 import soccerSrc from '@/assets/images/ic-soccer.png';
+import teamsSrc from '@/assets/images/ic-teams.png';
+import eventsSrc from '@/assets/images/ic-events.png';
+import partnershipSrc from '@/assets/images/ic-partnership.png';
+import contactUsSrc from '@/assets/images/ic-contact-us.png';
+import moreSrc from '@/assets/images/more.png';
+import closeSrc from '@/assets/images/close.png';
 import { useState } from 'react';
 
 interface Props {
@@ -30,36 +47,85 @@ export function Header({ className }: Props): JSX.Element {
   const menus = [
     {
       title: t('menu.team'),
+      icon: teamsSrc,
     },
     {
       title: t('menu.event'),
       href: '/event',
+      icon: eventsSrc,
     },
     {
       title: t('menu.partnership'),
+      icon: partnershipSrc,
     },
     {
       title: t('menu.contactus'),
+      icon: contactUsSrc,
     },
   ];
+
+  const [openDrawer, setOpenDrawer] = useState(false);
 
   return (
     <header className={cx(className, classes.root)}>
       <Link to="/" className={classes.link}>
         <img className={classes.logo} src={logoTopSrc} />
       </Link>
+      <Drawer
+        anchor="right"
+        open={openDrawer}
+        classes={{
+          paper: classes.drawerWrap,
+        }}
+        onClose={() => setOpenDrawer(!openDrawer)}
+      >
+        <Box
+          height="44px"
+          display="flex"
+          alignItems="center"
+          justifyContent="end"
+          marginRight="12px"
+        >
+          <img
+            className={classes.opIcon}
+            src={closeSrc}
+            onClick={() => setOpenDrawer(false)}
+          />
+        </Box>
+        <List sx={{ padding: '0' }}>
+          {menus.map(m => (
+            <ListItem key={m.title} disablePadding>
+              <ListItemButton>
+                <img className={classes.menuIcon} src={m.icon} />
+                <ListItemText primary={m.title} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
 
       <Box className={classes.menu}>
         {menus.map(m =>
           m.href ? (
-            <NavLink to={m.href}>{m.title}</NavLink>
+            <NavLink key={m.title} to={m.href}>
+              {m.title}
+            </NavLink>
           ) : (
-            <Box>{m.title}</Box>
+            <Box key={m.title}>{m.title}</Box>
           ),
         )}
       </Box>
-      <Box>
-        <img className={classes.soccer} src={soccerSrc} onClick={handleClick} />
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        className={classes.soccerWrap}
+      >
+        <img
+          className={cx(classes.soccer, { active: open })}
+          src={soccerSrc}
+          onClick={handleClick}
+        />
         <Menu
           classes={{
             paper: classes.soccerMenu,
@@ -77,6 +143,13 @@ export function Header({ className }: Props): JSX.Element {
           <MenuItem onClick={handleClose}>Japanese</MenuItem>
         </Menu>
       </Box>
+      <Box display="flex" alignItems="center" justifyContent="center">
+        <img
+          className={classes.opIcon}
+          src={moreSrc}
+          onClick={() => setOpenDrawer(!openDrawer)}
+        />
+      </Box>
     </header>
   );
 }
@@ -93,10 +166,19 @@ const useStyles = makeStyles()(theme => ({
     columnGap: '24px',
 
     [theme.breakpoints.down('md')]: {
+      height: '44px',
       borderRadius: 0,
       columnGap: '12px',
     },
   },
+
+  drawerWrap: {
+    '&&': {
+      width: '300px',
+      backgroundColor: theme.colors.gray5,
+    },
+  },
+
   menu: {
     marginLeft: 'auto',
     marginRight: '56px',
@@ -124,6 +206,7 @@ const useStyles = makeStyles()(theme => ({
     },
 
     [theme.breakpoints.down('md')]: {
+      display: 'none',
       margin: '0 0 0 auto',
     },
   },
@@ -137,6 +220,14 @@ const useStyles = makeStyles()(theme => ({
     },
   },
 
+  menuIcon: {
+    [theme.breakpoints.down('md')]: {
+      width: '22px',
+      height: '22px',
+      marginRight: '6px',
+    },
+  },
+
   link: {
     display: 'flex',
     position: 'relative',
@@ -146,8 +237,14 @@ const useStyles = makeStyles()(theme => ({
     width: '50px',
     height: '50px',
     [theme.breakpoints.down('md')]: {
-      width: '28px',
-      height: '28px',
+      width: '25px',
+      height: '25px',
+    },
+  },
+
+  soccerWrap: {
+    [theme.breakpoints.down('md')]: {
+      marginLeft: 'auto',
     },
   },
 
@@ -158,9 +255,22 @@ const useStyles = makeStyles()(theme => ({
     transition: 'all 200ms',
     transform: 'rotate(0deg)',
     cursor: 'pointer',
-    '&:hover': {
+    '&:hover, &.active': {
       opacity: '1',
       transform: 'rotate(90deg)',
+    },
+    [theme.breakpoints.down('md')]: {
+      width: '25px',
+      height: '25px',
+    },
+  },
+
+  opIcon: {
+    display: 'none',
+    [theme.breakpoints.down('md')]: {
+      display: 'block',
+      width: '25px',
+      height: '25px',
     },
   },
 
@@ -168,6 +278,9 @@ const useStyles = makeStyles()(theme => ({
     '&&': {
       marginTop: '20px',
       backgroundColor: theme.colors.gray5,
+      ul: {
+        padding: '0',
+      },
     },
   },
 }));
