@@ -5,20 +5,24 @@ import {
   styled,
 } from '@mui/material';
 interface IFormLabelProps extends FormLabelProps {
-  isRequired: boolean;
+  isRequired?: boolean;
 }
 export const FormLabel = styled((props: IFormLabelProps) => {
   const { isRequired, style, ...others } = props;
 
   return (
-    <Box>
+    <Box
+      sx={{
+        marginBottom: '21px',
+      }}
+    >
       <span className="Required">{isRequired && '* '}</span>
       <_FormLabel {...others} />
     </Box>
   );
 })({
   color: 'white',
-  fontSize: '15px',
+  fontSize: '24px',
   fontWeight: 500,
   lineHeight: '20px',
   '& .Required': {
