@@ -19,7 +19,6 @@ const useStyles = makeStyles()(theme => ({
     display: 'flex',
     flexDirection: 'column',
     gap: 2,
-    backgroundColor: '#2C2C2C',
     padding: 3,
     borderRadius: theme.shape.borderRadius,
   },
@@ -72,10 +71,20 @@ export const ContactForm: React.FC = () => {
       </FormControl>
 
       <FormControl>
+        <FormLabel>Upload Files</FormLabel>
         <Uploader />
       </FormControl>
 
-      <Button type="submit" variant="contained" color="info">
+      <Button
+        type="submit"
+        variant="contained"
+        color="info"
+        size="large"
+        sx={{
+          borderRadius: '20px',
+          height: '81px',
+        }}
+      >
         Send Message
       </Button>
     </form>
