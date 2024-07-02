@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
-import { ReactNode } from 'react';
+import { ReactNode, Ref, forwardRef } from 'react';
 
 interface Props {
   title?: ReactNode;
@@ -10,36 +10,38 @@ interface Props {
   children: ReactNode | ReactNode[];
 }
 
-export const ContentSection = (props: Props) => {
-  const { classes, cx } = useStyles();
-  const { title, subtitle, className, contentClassName, children } = props;
+export const ContentSection = forwardRef(
+  (props: Props, ref: Ref<HTMLDivElement>) => {
+    const { classes, cx } = useStyles();
+    const { title, subtitle, className, contentClassName, children } = props;
 
-  return (
-    <Box className={cx(classes.content, className)}>
-      {title && (
-        <Typography
-          component="p"
-          variant="ftTitle"
-          textAlign="center"
-          className={classes.title}
-        >
-          {title}
-        </Typography>
-      )}
-      {subtitle && (
-        <Typography
-          component="p"
-          variant="ftSubtitle"
-          textAlign="center"
-          className={classes.subtitle}
-        >
-          {subtitle}
-        </Typography>
-      )}
-      <Box className={contentClassName}>{children}</Box>
-    </Box>
-  );
-};
+    return (
+      <Box ref={ref} className={cx(classes.content, className)}>
+        {title && (
+          <Typography
+            component="p"
+            variant="ftTitle"
+            textAlign="center"
+            className={classes.title}
+          >
+            {title}
+          </Typography>
+        )}
+        {subtitle && (
+          <Typography
+            component="p"
+            variant="ftSubtitle"
+            textAlign="center"
+            className={classes.subtitle}
+          >
+            {subtitle}
+          </Typography>
+        )}
+        <Box className={contentClassName}>{children}</Box>
+      </Box>
+    );
+  },
+);
 
 const useStyles = makeStyles()(theme => ({
   content: {

@@ -27,6 +27,13 @@ import { ImgContent } from './components/ImgContent';
 import { ContactUs } from './components/ContactUs';
 import { Paragraph } from '@/components/Paragraph';
 import { Events } from '@/components/Events';
+import ScrollToView, {
+  useScrollToView,
+  ScrollToViewItem,
+} from '@/components/ScrollToView';
+import { useAtomValue } from 'jotai';
+import { AnchorNameEnum, anchorNameAtom } from '@/state/view';
+import { useEffect } from 'react';
 
 export async function loader() {
   await loadNamespaces('home');
@@ -36,6 +43,14 @@ export async function loader() {
 export const Component = () => {
   const { t } = useTranslation('home');
   const { classes, cx } = useStyles();
+  const view = useScrollToView();
+  const anchorName = useAtomValue(anchorNameAtom);
+
+  useEffect(() => {
+    if (anchorName) {
+      view.scrollTo(anchorName);
+    }
+  }, [anchorName]);
 
   const teams = [
     {
@@ -97,92 +112,104 @@ export const Component = () => {
         <img src={logoSrc} />
       </Box>
       <Box className={classes.content}>
-        <ContentSection
-          title={t('featuredTeams')}
-          subtitle={t('featuredTeamsSubtitle')}
-        >
-          <Box className={classes.teamWrap}>
-            {teams.map(team => (
-              <Box
-                key={team.bg}
-                className={classes.team}
-                sx={{
-                  backgroundImage: `url('${team.bg}')`,
-                  backgroundSize: 'cover',
-                }}
-              >
-                <img src={team.logo} />
-                <Typography className={classes.teamName}>
-                  {team.name}
-                </Typography>
-                <Typography className={classes.teamToken}>
-                  {team.token}
-                </Typography>
-                <Typography className={classes.teamPrice}>
-                  {team.price}
-                </Typography>
-              </Box>
-            ))}
-          </Box>
-        </ContentSection>
-        <ContentSection
-          className={classes.ourVision}
-          contentClassName={classes.ourVisionContent}
-        >
-          <img className={classes.contactBg} src={contactusBgSrc} />
-          <ImgContent
-            imgSrc={visionBgSrc}
-            title={t('ourVision')}
-            desc={<Paragraph iKey="ourVisionDesc" ns="home" />}
-          />
-          <ImgContent
-            imgSrc={missionBgSrc}
-            title={t('ourMission')}
-            desc={<Paragraph iKey="ourMissionDesc" ns="home" />}
-            opposite
-          />
-          <ImgContent
-            imgSrc={communityBgSrc}
-            title={t('community')}
-            desc={
-              <>
-                <Paragraph iKey="communityDesc" ns="home" />
-                <Box>
-                  <Button
-                    variant="ftNormal"
-                    className={classes.joinNow}
-                    href="/xxx"
+        <ScrollToView scrollToView={view}>
+          <ScrollToViewItem anchorName={AnchorNameEnum.Team}>
+            <ContentSection
+              title={t('featuredTeams')}
+              subtitle={t('featuredTeamsSubtitle')}
+            >
+              <Box className={classes.teamWrap}>
+                {teams.map(team => (
+                  <Box
+                    key={team.bg}
+                    className={classes.team}
+                    sx={{
+                      backgroundImage: `url('${team.bg}')`,
+                      backgroundSize: 'cover',
+                    }}
                   >
-                    <img src={tgLogoSrc} />
-                    {t('joinNow')}
-                  </Button>
-                </Box>
-              </>
-            }
-          />
-        </ContentSection>
-        <ContentSection
-          title={t('partnershipNetwork')}
-          subtitle={t('partnershipNetworkSubtitle')}
-          contentClassName={classes.partnershipContent}
-        >
-          <Box className={classes.partnershipWrap}>
-            {partnerships.map(ps => (
-              <Box key={ps.logo} className={classes.partnership}>
-                <img src={ps.logo} />
-                <Typography className={classes.partnershipName}>
-                  {ps.title}
-                </Typography>
+                    <img src={team.logo} />
+                    <Typography className={classes.teamName}>
+                      {team.name}
+                    </Typography>
+                    <Typography className={classes.teamToken}>
+                      {team.token}
+                    </Typography>
+                    <Typography className={classes.teamPrice}>
+                      {team.price}
+                    </Typography>
+                  </Box>
+                ))}
               </Box>
-            ))}
-          </Box>
-        </ContentSection>
-        <ContentSection title={t('event')} subtitle={t('eventSubtitle')}>
-          <Events />
-        </ContentSection>
-        <ContentSection title={t('contactUs')}>
-          <ContactUs />
-        </ContentSection>
+            </ContentSection>
+          </ScrollToViewItem>
+          <ScrollToViewItem anchorName={AnchorNameEnum.Vision}>
+            <ContentSection
+              className={classes.ourVision}
+              contentClassName={classes.ourVisionContent}
+            >
+              <img className={classes.contactBg} src={contactusBgSrc} />
+              <ImgContent
+                imgSrc={visionBgSrc}
+                title={t('ourVision')}
+                desc={<Paragraph iKey="ourVisionDesc" ns="home" />}
+              />
+              <ImgContent
+                imgSrc={missionBgSrc}
+                title={t('ourMission')}
+                desc={<Paragraph iKey="ourMissionDesc" ns="home" />}
+                opposite
+              />
+              <ImgContent
+                imgSrc={communityBgSrc}
+                title={t('community')}
+                desc={
+                  <>
+                    <Paragraph iKey="communityDesc" ns="home" />
+                    <Box>
+                      <Button
+                        variant="ftNormal"
+                        className={classes.joinNow}
+                        href="/xxx"
+                      >
+                        <img src={tgLogoSrc} />
+                        {t('joinNow')}
+                      </Button>
+                    </Box>
+                  </>
+                }
+              />
+            </ContentSection>
+          </ScrollToViewItem>
+          <ScrollToViewItem anchorName={AnchorNameEnum.Partnership}>
+            <ContentSection
+              title={t('partnershipNetwork')}
+              subtitle={t('partnershipNetworkSubtitle')}
+              contentClassName={classes.partnershipContent}
+            >
+              <Box className={classes.partnershipWrap}>
+                {partnerships.map(ps => (
+                  <Box key={ps.logo} className={classes.partnership}>
+                    <img src={ps.logo} />
+                    <Typography className={classes.partnershipName}>
+                      {ps.title}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            </ContentSection>
+          </ScrollToViewItem>
+          <ScrollToViewItem anchorName={AnchorNameEnum.Event}>
+            <ContentSection title={t('event')} subtitle={t('eventSubtitle')}>
+              <Events />
+            </ContentSection>
+          </ScrollToViewItem>
+          <ScrollToViewItem anchorName={AnchorNameEnum.ContactUs}>
+            <ContentSection title={t('contactUs')}>
+              <ContactUs />
+            </ContentSection>
+          </ScrollToViewItem>
+        </ScrollToView>
       </Box>
     </Box>
   );

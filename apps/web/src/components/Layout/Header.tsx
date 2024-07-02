@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {
   Drawer,
   List,
@@ -22,6 +21,8 @@ import moreSrc from '@/assets/images/more.png';
 import closeSrc from '@/assets/images/close.png';
 import { useState } from 'react';
 import { Lang, useLanguage } from '@/hooks/useLanguage';
+import { AnchorNameEnum, anchorNameAtom } from '@/state/view';
+import { useAtom } from 'jotai';
 
 interface Props {
   className?: string;
@@ -37,6 +38,9 @@ export function Header({ className }: Props): JSX.Element {
   const [language, setLanguage] = useLanguage();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const lc = useLocation();
+  const nav = useNavigate();
+  const [anchorName, setAnchorName] = useAtom(anchorNameAtom);
   const handleClick = (event: React.MouseEvent<HTMLImageElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -51,23 +55,41 @@ export function Header({ className }: Props): JSX.Element {
 
   const { classes, cx } = useStyles();
 
+  const eventPath = '/event';
+  const isEventPage = lc.pathname === eventPath;
+  const navToPageOrSection = (name: AnchorNameEnum) => {
+    setOpenDrawer(false);
+    setAnchorName(name);
+    if (name === AnchorNameEnum.Event) {
+      nav(eventPath);
+      return;
+    }
+    if (isEventPage) {
+      nav('/');
+    }
+  };
+
   const menus = [
     {
       title: t('menu.team'),
       icon: teamsSrc,
+      anchorName: AnchorNameEnum.Team,
     },
     {
       title: t('menu.event'),
-      href: '/event',
+      href: eventPath,
       icon: eventsSrc,
+      anchorName: AnchorNameEnum.Event,
     },
     {
       title: t('menu.partnership'),
       icon: partnershipSrc,
+      anchorName: AnchorNameEnum.Partnership,
     },
     {
       title: t('menu.contactus'),
       icon: contactUsSrc,
+      anchorName: AnchorNameEnum.ContactUs,
     },
   ];
 
@@ -101,8 +123,14 @@ export function Header({ className }: Props): JSX.Element {
         </Box>
         <List sx={{ padding: '0' }}>
           {menus.map(m => (
-            <ListItem key={m.title} disablePadding>
-              <ListItemButton>
+            <ListItem
+              key={m.title}
+              disablePadding
+              className={cx({
+                active: isEventPage && anchorName === m.anchorName,
+              })}
+            >
+              <ListItemButton onClick={() => navToPageOrSection(m.anchorName)}>
                 <img className={classes.menuIcon} src={m.icon} />
                 <ListItemText primary={m.title} />
               </ListItemButton>
@@ -118,7 +146,9 @@ export function Header({ className }: Props): JSX.Element {
               {m.title}
             </NavLink>
           ) : (
-            <Box key={m.title}>{m.title}</Box>
+            <Box key={m.title} onClick={() => navToPageOrSection(m.anchorName)}>
+              {m.title}
+            </Box>
           ),
         )}
       </Box>
@@ -189,6 +219,9 @@ const useStyles = makeStyles()(theme => ({
     '&&': {
       width: '300px',
       backgroundColor: theme.colors.gray5,
+      '.active': {
+        color: theme.colors.blue,
+      },
     },
   },
 
