@@ -23,4 +23,4 @@ export const Paragraph = ({ ns, iKey }: Props) => {
   );
 };
 
-const useStyles = makeStyles()(theme => ({}));
+const useStyles = makeStyles()(() => ({}));
