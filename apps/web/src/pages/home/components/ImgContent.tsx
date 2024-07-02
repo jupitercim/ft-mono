@@ -1,7 +1,5 @@
 import { Box, Typography } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
-import logoSrc from '@/assets/images/logo.png';
-import bannerBgSrc from '@/assets/images/banner-bg.png';
 import { ReactNode } from 'react';
 
 interface Props {

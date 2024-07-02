@@ -2,7 +2,7 @@ import { loadNamespaces } from '@/i18n';
 import { Box, Button, Typography } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
 import logoSrc from '@/assets/images/logo.png';
-import bannerBgSrc from '@/assets/images/banner-bg.png';
+import bannerBgSrc from '@/assets/images/banner-bg.jpg';
 import lazioSrc from '@/assets/images/ss-lazio.png';
 import lazioBgSrc from '@/assets/images/ss-lazio-bg.png';
 import portoSrc from '@/assets/images/pc-porto.png';
