@@ -25,6 +25,7 @@ import { ContentSection } from '@/components/ContentSection';
 import { useTranslation } from 'react-i18next';
 import { ImgContent } from './components/ImgContent';
 import { ContactUs } from './components/ContactUs';
+<<<<<<< HEAD
 import { Paragraph } from '@/components/Paragraph';
 import { Events } from '@/components/Events';
 import ScrollToView, {
@@ -34,6 +35,9 @@ import ScrollToView, {
 import { useAtomValue } from 'jotai';
 import { AnchorNameEnum, anchorNameAtom } from '@/state/view';
 import { useEffect } from 'react';
+=======
+import { CampaignDetail } from './components/CampaignDetail';
+>>>>>>> 2526720 (add campaign detail model)
 
 export async function loader() {
   await loadNamespaces('home');
