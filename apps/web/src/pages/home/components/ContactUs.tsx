@@ -7,7 +7,7 @@ export const ContactUs = () => {
   return <Box className={classes.content}>Contact Us</Box>;
 };
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = makeStyles()(() => ({
   content: {
     display: 'flex',
   },
