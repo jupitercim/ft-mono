@@ -1,7 +1,7 @@
 import { MutableRefObject, useRef } from 'react';
 
 export class ScrollToViewStore {
-  private nodeMap: Record<string, any> = {};
+  private nodeMap: Record<string, HTMLElement> = {};
 
   saveChildRef = (name: string, ref: MutableRefObject<any>) => {
     this.nodeMap[name] = ref.current;
