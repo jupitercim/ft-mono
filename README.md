@@ -1,10 +1,10 @@
-# lista-mono
+# ft-mono
 
 ## Before Start
 
 1. **Fork** this repo into your repositories
 2. Clone from your fork
-3. Set upstream(`git remote add upstream https://github.com/lista-dao/lista-mono.git`)
+3. Set upstream(`git remote add upstream https://github.com/jupitercim/ft-mono.git`)
 4. Make sure your node version higher than 18(`nvm use 18`)
 5. In the root: `pnpm i && pnpm run build` (about 2mins)
 
@@ -16,7 +16,7 @@
 
 ### Start project
 
-- pnpm run dev --filter=lista
+- pnpm run dev --filter=web
 
 ### Warning
 
@@ -33,7 +33,7 @@ Very simple
 
 ### from ./packages
 
-1. In your `apps/xxx/packages.json`, add `"@lista/xxx": "workspace:*",`(actually it's the packages.json's name)
+1. In your `apps/xxx/packages.json`, add `"@ft/xxx": "workspace:*",`(actually it's the packages.json's name)
 2. pnpm install
 
 ## How to push & merge
@@ -46,10 +46,6 @@ Very simple
 ## How to publish
 
 For short: just like in mono, everything is the same.
-
-### pr
-
-Make a new pr and add label `DEPLOY_TESTING`, after job's finished, use fe-header browser plugin to check, like: lista-pr: 1
 
 ### testing
 
