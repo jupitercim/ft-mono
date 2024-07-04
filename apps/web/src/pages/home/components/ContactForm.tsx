@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Button from '@mui/material/Button';
 import { makeStyles } from 'tss-react/mui';
@@ -6,12 +6,14 @@ import { TextField } from '@/components/form/TextField';
 import { FormLabel } from '@/components/form/FormLabel';
 import { FormControl } from '@/components/form/FormControl';
 import { Uploader } from '@/components/form/Uploader';
+import { useTranslation } from 'react-i18next';
+import { uploadContact } from '@/api/uploadContact';
 
 type FormValues = {
-  userName: string;
+  name: string;
   email: string;
   message: string;
-  files: FileList;
+  files: string[];
 };
 
 const useStyles = makeStyles()(theme => ({
@@ -26,15 +28,20 @@ const useStyles = makeStyles()(theme => ({
 
 export const ContactForm: React.FC = () => {
   const { classes } = useStyles();
+  const { t } = useTranslation("home")
   const {
     register,
+    setValue,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid},
   } = useForm<FormValues>();
+  const [requesting, setRequesting] = useState(false)
 
   const onSubmit: SubmitHandler<FormValues> = data => {
     console.log(data);
   };
+
+
 
   return (
     <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
@@ -42,9 +49,9 @@ export const ContactForm: React.FC = () => {
         <FormLabel isRequired>Your Name</FormLabel>
         <TextField
           placeholder="Please Input"
-          {...register('userName', { required: true })}
-          error={!!errors.userName}
-          helperText={errors.userName ? 'Name is required' : ''}
+          {...register('name', { required: true })}
+          error={!!errors.name}
+          helperText={errors.name ? 'Name is required' : ''}
         />
       </FormControl>
 
@@ -72,20 +79,38 @@ export const ContactForm: React.FC = () => {
 
       <FormControl>
         <FormLabel>Upload Files</FormLabel>
-        <Uploader />
+        <Uploader
+          onChange={files => {
+            setValue('files', files);
+          }}
+        />
       </FormControl>
 
       <Button
-        type="submit"
         variant="contained"
         color="info"
         size="large"
+        disabled={!isValid || requesting}
         sx={{
           borderRadius: '20px',
           height: '81px',
         }}
+        onClick={handleSubmit(async values => {
+          setRequesting(true);
+          try {
+            await uploadContact({
+              email: values.email,
+              file: values.files.join(','),
+              message: values.message,
+              name: values.name,
+              remark: '',
+            });
+          } finally {
+            setRequesting(false);
+          }
+        })}
       >
-        Send Message
+        {t('send-message')}
       </Button>
     </form>
   );

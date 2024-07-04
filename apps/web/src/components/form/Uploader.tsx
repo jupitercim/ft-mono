@@ -1,7 +1,9 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useCallback, useEffect } from 'react';
 import uploaderImageSrc from '@/assets/images/folder-upload@2x.png';
-import { Box, List, ListItem } from '@mui/material';
+import { Box, CircularProgress, List, ListItem } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
+import { uploadFile } from '@/api/uploadFile';
+import { ChangeHandler, Control } from 'react-hook-form';
 
 const useStyles = makeStyles()(() => {
   return {
@@ -20,17 +22,51 @@ const useStyles = makeStyles()(() => {
 
 interface FileItem {
   name: string;
+  loading: boolean;
+  link?: string
 }
 
-export const Uploader: React.FC = () => {
+interface UploaderProps {
+  onChange?: (files: string[]) => void;
+}
+
+export const Uploader: React.FC<UploaderProps> = ({onChange}) => {
+
   const { classes } = useStyles();
   const [fileList, setFileList] = useState<FileItem[]>([]);
 
-  const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    onChange?.(fileList.map(x => x.link).filter(x => x) as string[]);
+  }, [fileList])
+
+  const update = useCallback(async (file: File) => {
+
+    const result = await uploadFile(file)
+    setFileList(prev => {
+      return prev.map(item => {
+        if (item.name === file.name) {
+          return {
+            ...item,
+            loading: false,
+            link: result
+          }
+        }
+        return item
+      })
+    })
+  }, [])
+
+  const handleFileUpload = async (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files) {
-      const newFileList = Array.from(files).map(file => ({ name: file.name }));
+      const newFileList = Array.from(files).map(file => ({
+        name: file.name,
+        loading: true,
+      }));
       setFileList(newFileList);
+      for(let i = 0; i < files.length; i++) {
+        update(files[i])
+      }
     }
   };
 
@@ -75,21 +111,21 @@ export const Uploader: React.FC = () => {
         />
       </Box>
       {fileList.length > 0 && (
-        <List
-          style={{
-            width: '100%',
-            marginTop: '10px',
-            background: '#ffffff',
-            borderRadius: '5px',
-            padding: '10px',
-          }}
+        <Box
+          display={'flex'}
+          flexDirection={'row'}
+          flexWrap={'wrap'}
+          alignItems={'flex-start'}
         >
           {fileList.map((file, index) => (
-            <ListItem key={index} style={{ padding: '5px 0' }}>
-              {file.name}
-            </ListItem>
+            <div
+              key={index}
+              style={{ marginRight: '10px', background: 'rgba(0,0,0,.3)' }}
+            >
+              {file.loading ? <CircularProgress size={20} /> : file.name}
+            </div>
           ))}
-        </List>
+        </Box>
       )}
     </Box>
   );

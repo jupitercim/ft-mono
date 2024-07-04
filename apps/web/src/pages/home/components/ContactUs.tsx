@@ -3,15 +3,19 @@ import { makeStyles } from 'tss-react/mui';
 import { ContactForm } from './ContactForm';
 import DisLogo from '@/assets/images/dis-logo.png';
 import XLogo from '@/assets/images/x-logo.png';
+import { useTransition } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const ContactUs = () => {
   const { classes, cx } = useStyles();
 
+  const { t } = useTranslation('home');
   const lines = [
-    'Launch your token swiftly via FollowerClub',
-    'Engage your fans with Blockchain-powered solutions',
-    'Connect with fans like never before',
+    t("contact-desc-01"),
+    t("contact-desc-02"),
+    t("contact-desc-03"),
   ];
+
   return (
     <Grid
       container
