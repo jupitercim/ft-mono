@@ -13,7 +13,7 @@ export async function uploadFile(file: File): Promise<any> {
   if (!response.ok) {
     throw new Error(`Failed to upload file: ${response.statusText}`);
   }
-  const json = await response.json();
+  const json = await response.json(); 
 
   return json.data;
 }

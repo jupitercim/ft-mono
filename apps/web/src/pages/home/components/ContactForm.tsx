@@ -4,11 +4,13 @@ import { useTranslation } from 'react-i18next';
 import Button from '@mui/material/Button';
 import { makeStyles } from 'tss-react/mui';
 
-import { uploadContact } from '@/api/uploadContact';
 import { FormControl } from '@/components/form/FormControl';
 import { FormLabel } from '@/components/form/FormLabel';
 import { TextField } from '@/components/form/TextField';
 import { Uploader } from '@/components/form/Uploader';
+import { stdPost } from '@/api/stdPost';
+import { usePost } from '@/hooks/usePost';
+
 
 type FormValues = {
   name: string;
@@ -37,6 +39,7 @@ export const ContactForm: React.FC = () => {
     formState: { errors, isValid },
   } = useForm<FormValues>();
   const [requesting, setRequesting] = useState(false)
+  const [loading, post] = usePost()
 
 
   return (
@@ -86,24 +89,19 @@ export const ContactForm: React.FC = () => {
         variant="contained"
         color="info"
         size="large"
-        disabled={!isValid || requesting}
+        disabled={!isValid || loading}
         sx={{
           borderRadius: '20px',
           height: '81px',
         }}
-        onClick={handleSubmit(async values => {
-          setRequesting(true);
-          try {
-            await uploadContact({
-              email: values.email,
-              file: values.files.join(','),
-              message: values.message,
-              name: values.name,
-              remark: '',
-            });
-          } finally {
-            setRequesting(false);
-          }
+        onClick={handleSubmit(values => {
+          post('uploadContact', {
+            email: values.email,
+            file: values.files.join(','),
+            message: values.message,
+            name: values.name,
+            remark: '',
+          });
         })}
       >
         {t('send-message')}
