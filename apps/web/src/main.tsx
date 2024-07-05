@@ -3,6 +3,7 @@ import { RouterProvider } from 'react-router-dom';
 
 import './i18n';
 import './polyfill';
+import './env'
 
 import { router } from './router';
 
