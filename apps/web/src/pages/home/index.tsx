@@ -37,6 +37,8 @@ import { loadNamespaces } from '@/i18n';
 import { anchorNameAtom, AnchorNameEnum } from '@/state/view';
 import { Footer } from './components/Footer';
 import { Team, fetchPriceMap } from '@/api/fetchTeams';
+import { apiGetAtom } from '@/atom/apiGetAtom';
+import { useGet } from '@/hooks/useGet';
 
 export async function loader() {
   await loadNamespaces('home');
@@ -86,6 +88,14 @@ export const Component = () => {
       ]);
     });
   }, []);
+
+  const queryData = useAtomValue(
+    apiGetAtom({
+      apiName: 'query',
+      params: { id: '1', name: 'name' },
+    }),
+  );
+  console.log('queryData', queryData);
 
   useEffect(() => {
     if (anchorName) {

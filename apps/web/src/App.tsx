@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import NiceModal from '@ebay/nice-modal-react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Layout } from '@/components/Layout';
+import { SnackbarProvider } from 'notistack';
 
 import './polyfill';
 
@@ -16,10 +17,12 @@ export const layoutLoader = async () => {
 export function App() {
   return (
     <ThemeProvider>
-      <CssBaseline />
-      <Layout>
-        <Outlet />
-      </Layout>
+      <SnackbarProvider>
+        <CssBaseline />
+        <Layout>
+          <Outlet />
+        </Layout>
+      </SnackbarProvider>
     </ThemeProvider>
   );
 }
