@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Button, Typography } from '@mui/material';
 import { useAtomValue } from 'jotai';
@@ -34,8 +34,9 @@ import ScrollToView, {
   useScrollToView,
 } from '@/components/ScrollToView';
 import { loadNamespaces } from '@/i18n';
-import { anchorNameAtom,AnchorNameEnum } from '@/state/view';
+import { anchorNameAtom, AnchorNameEnum } from '@/state/view';
 import { Footer } from './components/Footer';
+import { Team, fetchPriceMap } from '@/api/fetchTeams';
 
 export async function loader() {
   await loadNamespaces('home');
@@ -47,43 +48,50 @@ export const Component = () => {
   const { classes, cx } = useStyles();
   const view = useScrollToView();
   const anchorName = useAtomValue(anchorNameAtom);
+  const [teams, setTeams] = useState<
+    (Pick<Team, 'logo' | 'name' | 'coinName' | 'coinPrice'> & { bg: string })[]
+  >([]);
+
+  useEffect(() => {
+    fetchPriceMap(['LAZIO', 'PORTO', 'SANTOS', 'ALPINE']).then(priceMap => {
+      setTeams([
+        {
+          logo: lazioSrc,
+          bg: lazioBgSrc,
+          name: 'SS Lazio',
+          coinName: 'LAZIO',
+          coinPrice: priceMap.LAZIO || 0,
+        },
+        {
+          logo: portoSrc,
+          bg: portoBgSrc,
+          name: 'PC Porto',
+          coinName: 'PORTO',
+          coinPrice: priceMap.PORTO || 0,
+        },
+        {
+          logo: santosSrc,
+          bg: santosBgSrc,
+          name: 'Santos FC',
+          coinName: 'SANTOS',
+          coinPrice: priceMap.SANTOS || 0,
+        },
+        {
+          logo: alpineSrc,
+          bg: alpineBgSrc,
+          name: 'BWT Alpine F1 Team',
+          coinName: 'ALPINE',
+          coinPrice: priceMap.ALPINE || 0,
+        },
+      ]);
+    });
+  }, []);
 
   useEffect(() => {
     if (anchorName) {
       view.scrollTo(anchorName);
     }
   }, [anchorName]);
-
-  const teams = [
-    {
-      logo: lazioSrc,
-      bg: lazioBgSrc,
-      name: 'SS Lazio',
-      token: 'LAZIO',
-      price: '$2.78',
-    },
-    {
-      logo: portoSrc,
-      bg: portoBgSrc,
-      name: 'PC Porto',
-      token: 'PORTO',
-      price: '$2.78',
-    },
-    {
-      logo: santosSrc,
-      bg: santosBgSrc,
-      name: 'Santos FC',
-      token: 'SANTOS',
-      price: '$2.78',
-    },
-    {
-      logo: alpineSrc,
-      bg: alpineBgSrc,
-      name: 'BWT Alpine F1 Team',
-      token: 'ALPINE',
-      price: '$2.78',
-    },
-  ];
 
   const partnerships = [
     {
@@ -135,10 +143,10 @@ export const Component = () => {
                       {team.name}
                     </Typography>
                     <Typography className={classes.teamToken}>
-                      {team.token}
+                      {team.coinName}
                     </Typography>
                     <Typography className={classes.teamPrice}>
-                      {team.price}
+                      ${team.coinPrice.toFixed(3)}
                     </Typography>
                   </Box>
                 ))}
