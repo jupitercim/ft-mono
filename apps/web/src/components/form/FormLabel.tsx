@@ -1,31 +1,39 @@
 import {
   Box,
-  FormLabel as _FormLabel,
+  FormLabel as TFormLabel,
   FormLabelProps,
   styled,
 } from '@mui/material';
+import { makeStyles } from 'tss-react/mui';
 interface IFormLabelProps extends FormLabelProps {
   isRequired?: boolean;
 }
+const useStyles = makeStyles()(theme => ({
+  root: {
+    marginBotton: '20px',
+    fontSize: '24px',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '15px',
+      marginBottom: '8px',
+    },
+  },
+}));
 export const FormLabel = styled((props: IFormLabelProps) => {
-  const { isRequired, style, ...others } = props;
+  const { isRequired, ...others } = props;
+  const { classes } = useStyles();
 
   return (
-    <Box
-      sx={{
-        marginBottom: '21px',
-      }}
-    >
+    <Box className={classes.root}>
       <span className="Required">{isRequired && '* '}</span>
-      <_FormLabel {...others} />
+      <TFormLabel {...others} />
     </Box>
   );
-})({
+})(({ theme }) => ({
   color: 'white',
-  fontSize: '24px',
+
   fontWeight: 500,
   lineHeight: '20px',
   '& .Required': {
     color: 'white',
   },
-});
+}));

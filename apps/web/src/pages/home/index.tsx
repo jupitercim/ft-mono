@@ -1,43 +1,40 @@
-import { loadNamespaces } from '@/i18n';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Box, Button, Typography } from '@mui/material';
+import { useAtomValue } from 'jotai';
 import { makeStyles } from 'tss-react/mui';
-import logoSrc from '@/assets/images/logo.png';
+
+import { ContactUs } from './components/ContactUs';
+import { ImgContent } from './components/ImgContent';
+import alpineSrc from '@/assets/images/alpine.png';
+import alpineLogoSrc from '@/assets/images/alpine-1.png';
+import alpineBgSrc from '@/assets/images/alpine-bg.png';
 import bannerBgSrc from '@/assets/images/banner-bg.jpg';
-import lazioSrc from '@/assets/images/ss-lazio.png';
-import lazioBgSrc from '@/assets/images/ss-lazio-bg.png';
+import binanceLogoSrc from '@/assets/images/binance-1.png';
+import communityBgSrc from '@/assets/images/community-bg.png';
+import contactusBgSrc from '@/assets/images/contact-us-bg.png';
+import potroLogoSrc from '@/assets/images/fc-potro-1.png';
+import logoSrc from '@/assets/images/logo.png';
+import missionBgSrc from '@/assets/images/mission-bg.png';
 import portoSrc from '@/assets/images/pc-porto.png';
 import portoBgSrc from '@/assets/images/pc-porto-bg.png';
+import lazioLogoSrc from '@/assets/images/s.s.lazio-1.png';
+import santosLogoSrc from '@/assets/images/santos-1.png';
 import santosSrc from '@/assets/images/santos-fc.png';
 import santosBgSrc from '@/assets/images/santos-fc-bg.png';
-import alpineSrc from '@/assets/images/alpine.png';
-import alpineBgSrc from '@/assets/images/alpine-bg.png';
-import visionBgSrc from '@/assets/images/vision-bg.png';
-import missionBgSrc from '@/assets/images/mission-bg.png';
-import communityBgSrc from '@/assets/images/community-bg.png';
+import lazioSrc from '@/assets/images/ss-lazio.png';
+import lazioBgSrc from '@/assets/images/ss-lazio-bg.png';
 import tgLogoSrc from '@/assets/images/tg-logo.png';
-import contactusBgSrc from '@/assets/images/contact-us-bg.png';
-import binanceLogoSrc from '@/assets/images/binance-1.png';
-import potroLogoSrc from '@/assets/images/fc-potro-1.png';
-import santosLogoSrc from '@/assets/images/santos-1.png';
-import alpineLogoSrc from '@/assets/images/alpine-1.png';
-import lazioLogoSrc from '@/assets/images/s.s.lazio-1.png';
+import visionBgSrc from '@/assets/images/vision-bg.png';
 import { ContentSection } from '@/components/ContentSection';
-import { useTranslation } from 'react-i18next';
-import { ImgContent } from './components/ImgContent';
-import { ContactUs } from './components/ContactUs';
-<<<<<<< HEAD
-import { Paragraph } from '@/components/Paragraph';
 import { Events } from '@/components/Events';
+import { Paragraph } from '@/components/Paragraph';
 import ScrollToView, {
-  useScrollToView,
   ScrollToViewItem,
+  useScrollToView,
 } from '@/components/ScrollToView';
-import { useAtomValue } from 'jotai';
-import { AnchorNameEnum, anchorNameAtom } from '@/state/view';
-import { useEffect } from 'react';
-=======
-import { CampaignDetail } from './components/CampaignDetail';
->>>>>>> 2526720 (add campaign detail model)
+import { loadNamespaces } from '@/i18n';
+import { anchorNameAtom,AnchorNameEnum } from '@/state/view';
 
 export async function loader() {
   await loadNamespaces('home');

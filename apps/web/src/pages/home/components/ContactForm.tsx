@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import Button from '@mui/material/Button';
 import { makeStyles } from 'tss-react/mui';
-import { TextField } from '@/components/form/TextField';
-import { FormLabel } from '@/components/form/FormLabel';
-import { FormControl } from '@/components/form/FormControl';
-import { Uploader } from '@/components/form/Uploader';
-import { useTranslation } from 'react-i18next';
+
 import { uploadContact } from '@/api/uploadContact';
+import { FormControl } from '@/components/form/FormControl';
+import { FormLabel } from '@/components/form/FormLabel';
+import { TextField } from '@/components/form/TextField';
+import { Uploader } from '@/components/form/Uploader';
 
 type FormValues = {
   name: string;
@@ -28,23 +29,18 @@ const useStyles = makeStyles()(theme => ({
 
 export const ContactForm: React.FC = () => {
   const { classes } = useStyles();
-  const { t } = useTranslation("home")
+  const { t } = useTranslation('home');
   const {
     register,
     setValue,
     handleSubmit,
-    formState: { errors, isValid},
+    formState: { errors, isValid },
   } = useForm<FormValues>();
   const [requesting, setRequesting] = useState(false)
 
-  const onSubmit: SubmitHandler<FormValues> = data => {
-    console.log(data);
-  };
-
-
 
   return (
-    <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+    <form className={classes.form}>
       <FormControl>
         <FormLabel isRequired>Your Name</FormLabel>
         <TextField

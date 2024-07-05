@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
 import { ContactForm } from './ContactForm';
 import DisLogo from '@/assets/images/dis-logo.png';
@@ -20,15 +20,17 @@ export const ContactUs = () => {
     <Grid
       container
       sx={{
-        mt: '91px',
+        mt: {
+          md: '91px',
+        },
       }}
     >
-      <Grid flex={1} display={'flex'}>
+      <Grid item xs={12} sm={12} md={6}>
         <Box
           flex={1}
+          className={classes.info}
           sx={{
-            maxWidth: '482px',
-            margin: '0 auto',
+
           }}
           display={'flex'}
           flexDirection={'column'}
@@ -49,60 +51,41 @@ export const ContactUs = () => {
           </Box>
           <Box>
             <Box>
-              <a className={classes.link}>Legal</a>
-              <a
-                className={classes.link}
-                style={{
-                  marginLeft: '60px',
-                }}
-              >
-                Terms
-              </a>
+              <Box className={classes.linkw}>
+                <a className={classes.link}>Legal</a>
+              </Box>
+              <Box className={classes.linkw}>
+                <a className={classes.link}>Terms</a>
+              </Box>
             </Box>
-            <a
-              className={classes.link}
-              style={{
-                display: 'block',
-                margin: '36px 0px',
-              }}
-            >
-              <Typography
-                style={{
-                  opacity: 0.5,
-                }}
-              >
-                fantoken@followerclub.io
-              </Typography>
-            </a>
-            <Box display={'flex'} flexDirection={'row'} alignItems={'center'}>
+            <Box className={classes.fantokenline}>
               <a className={classes.link}>
-                <img
-                  src={DisLogo}
+                <Typography
                   style={{
-                    width: '32px',
-                    opacity: 0.7,
+                    opacity: 0.5,
                   }}
-                />
+                >
+                  fantoken@followerclub.io
+                </Typography>
               </a>
-              <a
-                className={classes.link}
-                style={{
-                  marginLeft: '27px',
-                }}
+              <Box
+                display="flex"
+                flexDirection="row"
+                alignItems="center"
+                className={classes.fticons}
               >
-                <img
-                  src={XLogo}
-                  style={{
-                    opacity: 0.7,
-                    width: '26px',
-                  }}
-                />
-              </a>
+                <a className={classes.link}>
+                  <img alt="" src={DisLogo} className={classes.fticon} />
+                </a>
+                <a className={classes.link}>
+                  <img alt="" src={XLogo} className={classes.fticon} />
+                </a>
+              </Box>
             </Box>
           </Box>
         </Box>
       </Grid>
-      <Grid item flex={1}>
+      <Grid item xs={12} sm={12} md={6}>
         <Box
           sx={{
             maxWidth: '584px',
@@ -117,10 +100,28 @@ export const ContactUs = () => {
 };
 
 const useStyles = makeStyles()(theme => ({
+  info: {
+    maxWidth: '482px',
+    [theme.breakpoints.down('md')]: {
+      maxWidth: '584px',
+      width: '100%',
+    },
+    margin: '0 auto',
+  },
   link: {
     cursor: 'pointer',
     '&:hover': {
       color: theme.colors.blue,
+    },
+    [theme.breakpoints.down('md')]: {
+      marginRight: '5px',
+    },
+  },
+  linkw: {
+    display: 'inline-block',
+    marginRight: '60px',
+    [theme.breakpoints.down('md')]: {
+      marginRight: '20px',
     },
   },
   title: {
@@ -129,6 +130,10 @@ const useStyles = makeStyles()(theme => ({
     color: '#FFFFFF',
     lineHeight: '36px',
     marginBottom: '54px',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '16px',
+      marginBottom: '18px',
+    },
   },
   text: {
     fontWeight: 400,
@@ -136,5 +141,25 @@ const useStyles = makeStyles()(theme => ({
     color: '#666666',
     lineHeight: '44px',
     fontStyle: 'normal',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '14px',
+      lineHeight: '16px',
+    },
+  },
+  fantokenline: {
+    display: 'flex',
+    flexDirection: 'column',
+    [theme.breakpoints.down('md')]: {
+      justifyContent: 'space-between',
+      flexDirection: 'row',
+    },
+  },
+  fticons: {},
+  fticon: {
+    width: '32px',
+    [theme.breakpoints.down('md')]: {
+      width: '16px',
+      opacity: 0.7,
+    },
   },
 }));

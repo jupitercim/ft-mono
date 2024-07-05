@@ -1,12 +1,12 @@
-import { Envs } from "@/env";
+import { Envs } from '@/env';
 
 export async function uploadFile(file: File): Promise<any> {
   const url = `${Envs.API_HOST}/v1/public/ft/upload`;
   const formData = new FormData();
-  formData.append("file", file);
+  formData.append('file', file);
 
   const response = await fetch(url, {
-    method: "POST",
+    method: 'POST',
     body: formData,
   });
 
@@ -15,5 +15,5 @@ export async function uploadFile(file: File): Promise<any> {
   }
   const json = await response.json();
 
-  return json.data
+  return json.data;
 }
