@@ -1,5 +1,6 @@
 import CampainDetail from '@/assets/images/campaign-detail.png';
 import { Box, Grid, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { makeStyles } from 'tss-react/mui';
 const useStyles = makeStyles()(theme => ({
 
@@ -13,6 +14,7 @@ const useStyles = makeStyles()(theme => ({
 
 export const CampaignDetail = () => {
   const {classes} = useStyles()
+  const {t} = useTranslation('event')
   return (
     <Grid
       container
@@ -24,7 +26,7 @@ export const CampaignDetail = () => {
         <Box display={'flex'} justifyContent={'center'} className={classes.imageContainer}>
           <img
             style={{
-              // width: '70%',
+              width: '70%',
             }}
             src={CampainDetail}
             alt="campaign-detail"
@@ -33,19 +35,7 @@ export const CampaignDetail = () => {
       </Grid>
       <Grid item xs={12} md={8}>
         <Typography>
-          Join our fun football event and earn a medal just by participating!
-          Whether you're a beginner or a pro, everyone is welcome. Thisevent
-          aims to promote a healthy lifestyle, foster friendships, andprovide a
-          platform for football enthusiasts to showcase their skills. Sign up
-          now, enjoy the thrill of the game, and take home a shiny medalas a
-          reward. Limited spots available, so don't miss out-register todayand
-          be part of the excitement! Join our fun football event and earn a
-          medal just by participating! Whether you're a beginner or a pro,
-          everyone is welcome. Thisevent aims to promote a healthy lifestyle,
-          foster friendships, andprovide a platform for football enthusiasts to
-          showcase their skills. Sign up now, enjoy the thrill of the game, and
-          take home a shiny medalas a reward. Limited spots available, so don't
-          miss out-register todayand be part of the excitement!
+          {t('detail')}
         </Typography>
       </Grid>
     </Grid>

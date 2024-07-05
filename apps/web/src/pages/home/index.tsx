@@ -35,6 +35,7 @@ import ScrollToView, {
 } from '@/components/ScrollToView';
 import { loadNamespaces } from '@/i18n';
 import { anchorNameAtom,AnchorNameEnum } from '@/state/view';
+import { Footer } from './components/Footer';
 
 export async function loader() {
   await loadNamespaces('home');
@@ -210,6 +211,7 @@ export const Component = () => {
               <ContactUs />
             </ContentSection>
           </ScrollToViewItem>
+          <Footer />
         </ScrollToView>
       </Box>
     </Box>
