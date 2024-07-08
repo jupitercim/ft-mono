@@ -9,6 +9,7 @@ import ongoingBgSrc from '@/assets/images/ongoing-bg.png';
 import notStartedBgSrc from '@/assets/images/not-started-bg.png';
 import endedBgSrc from '@/assets/images/ended-bg.png';
 import { ReactNode } from 'react';
+import { useEvents } from '@/hooks/useEvents';
 
 enum EventStatusEnum {
   Ongoing,
@@ -53,33 +54,7 @@ export const Events = () => {
 
   const isMobile = useMediaQuery('(max-width:700px)');
 
-  const events = [
-    {
-      img: events1Src,
-      title: 'Increase your membership levels to earn rewards!',
-      status: EventStatusEnum.Ongoing,
-    },
-    {
-      img: events1Src,
-      title: 'Increase your ms!Increase your ms!',
-      status: EventStatusEnum.NotStarted,
-    },
-    {
-      img: events1Src,
-      title: 'LeIncrease your ms!Increase your ms!rds!',
-      status: EventStatusEnum.Ended,
-    },
-    {
-      img: events1Src,
-      title: 'LeIncrease your ms!Increase your ms!rds!0',
-      status: EventStatusEnum.Ended,
-    },
-    {
-      img: events1Src,
-      title: 'LeIncrease your ms!Increase your ms!rds!1',
-      status: EventStatusEnum.Ended,
-    },
-  ];
+  const events = useEvents();
 
   const settings: Settings = {
     dots: true,
@@ -95,9 +70,17 @@ export const Events = () => {
     <Box width="100%">
       <Slider {...settings}>
         {events.map(evt => (
-          <div key={evt.title}>
+          <Box
+            key={evt.title}
+            sx={{
+              cursor: 'pointer',
+            }}
+            onClick={() => {
+              window.open(`/event/${evt.id}`);
+            }}
+          >
             <Event src={evt.img} title={evt.title} status={evt.status} />
-          </div>
+          </Box>
         ))}
       </Slider>
     </Box>

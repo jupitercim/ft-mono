@@ -41,7 +41,7 @@ import { apiGetAtom } from '@/atom/apiGetAtom';
 import { useGet } from '@/hooks/useGet';
 
 export async function loader() {
-  await loadNamespaces('home');
+  await loadNamespaces(['home', 'event']);
   return {};
 }
 
