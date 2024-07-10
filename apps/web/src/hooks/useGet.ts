@@ -1,7 +1,5 @@
-import { APIBodyType, APINames, APIParamsType } from "@/api/api.def";
-import { stdPost } from "@/api/stdPost";
+import { APINames, APIParamsType } from "@/api/api.def";
 import { useCallback, useState } from "react";
-import { useSnackbar } from 'notistack'
 import { stdGet } from "@/api/stdGet";
 
 export const useGet = () => {
