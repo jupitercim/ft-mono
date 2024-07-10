@@ -10,15 +10,19 @@ export function useEvents() {
       id: 100001,
       img: events1Src,
       title: t('eventTitle1'),
-      desc: t('eventDesc1'),
+      desc: 'eventDesc1',
       status: EventStatusEnum.Ongoing,
+      start: 1720585595785, 
+      end: 1720595595785
     },
     {
       id: 100002,
       img: events1Src,
       title: t('eventTitle2'),
-      desc: t('eventDesc2'),
+      desc: ('eventDesc2'),
       status: EventStatusEnum.NotStarted,
+      start: 1720385595785,
+      end: 1730585595785
     },
     {
       id: 100003,
@@ -26,6 +30,8 @@ export function useEvents() {
       title: t('eventTitle3'),
       desc: t('eventDesc3'),
       status: EventStatusEnum.Ended,
+      start: 1720595595785,
+      end: 1722595595785
     },
   ];
 

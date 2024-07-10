@@ -92,7 +92,7 @@ export const ContactForm: React.FC = () => {
         disabled={!isValid || loading}
         sx={{
           borderRadius: '20px',
-          height: '81px',
+          padding: '12px 20px',
         }}
         onClick={handleSubmit(values => {
           post('uploadContact', {

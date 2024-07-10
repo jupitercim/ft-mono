@@ -8,19 +8,32 @@ interface Props {
   iKey: string;
 }
 
+
+
 export const Paragraph = ({ ns, iKey }: Props) => {
   const { classes, cx } = useStyles();
   const { t } = useTranslation(ns);
 
   return (
-    <Trans
-      t={t}
-      i18nKey={iKey}
-      components={{
-        br: <br />,
-      }}
-    />
+    <Typography component={'p'} variant="body1" className={classes.p}>
+      <Trans
+        t={t}
+        i18nKey={iKey}
+        components={{
+          br: <br />,
+        }}
+      />
+    </Typography>
   );
 };
 
-const useStyles = makeStyles()(() => ({}));
+const useStyles = makeStyles()((theme) => ({
+  p: {
+    fontSize: '24px !important',
+    opacity: .7,
+    [theme.breakpoints.down('md')]: {
+      fontSize: '12px !important',
+    }
+
+  }
+}));

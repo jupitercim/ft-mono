@@ -46,12 +46,12 @@ export const Footer = () => {
 
 const useStyles = makeStyles()(theme => ({
   root: {
-    width: '1200px',
-    margin: '0 auto',
+    padding: '0 50px',
     marginBottom: '36px',
     [theme.breakpoints.down('md')]: {
       maxWidth: '584px',
-      marginBottom: '14px'
+      marginBottom: '14px',
+      padding: '0 15px',
     }
   },
   linkSection: {
@@ -62,6 +62,7 @@ const useStyles = makeStyles()(theme => ({
     '&:hover': {
       color: theme.colors.blue,
     },
+    marginRight: '10px',
     [theme.breakpoints.down('md')]: {
       marginRight: '5px',
     },
