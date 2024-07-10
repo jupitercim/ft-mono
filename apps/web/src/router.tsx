@@ -22,9 +22,9 @@ export const router = createBrowserRouter(
           },
         },
         {
-          path: '/event',
+          path: '/event/:id',
           lazy: async () => {
-            const { Component, loader } = await import('@/pages/event');
+            const { Component, loader } = await import('@/pages/event/event');
             return {
               loader,
               Component,

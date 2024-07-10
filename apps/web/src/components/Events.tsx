@@ -4,7 +4,6 @@ import { useMediaQuery } from '@mui/material';
 import Slider, { Settings } from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import events1Src from '@/assets/images/events-1.png';
 import ongoingBgSrc from '@/assets/images/ongoing-bg.png';
 import notStartedBgSrc from '@/assets/images/not-started-bg.png';
 import endedBgSrc from '@/assets/images/ended-bg.png';

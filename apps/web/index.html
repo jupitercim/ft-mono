@@ -33,9 +33,27 @@
         dataLayer.push(arguments);
       }
       gtag('js', new Date());
-
       gtag('config', 'G-63PGS5FJK4');
     </script>
+    <!-- <script>
+      function setResponsiveFontSize() {
+        const baseWidth = 750; // Base width in pixels
+        const baseSize = 24; // Base font size in pixels at base width
+        const screenWidth = window.innerWidth;
+
+        // Calculate the new font size based on the screen width
+        const newSize = (screenWidth / baseWidth) * baseSize;
+
+        // Set the new font size to the root element
+        document.documentElement.style.fontSize = newSize + 'px';
+      }
+
+      // Set font size on initial load
+      window.addEventListener('load', setResponsiveFontSize);
+
+      // Adjust font size on window resize
+      window.addEventListener('resize', setResponsiveFontSize);
+    </script> -->
   </head>
 
   <body>
