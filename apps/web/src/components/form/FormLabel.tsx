@@ -40,7 +40,7 @@ export const FormLabel = styled((props: IFormLabelProps) => {
       <TFormLabel className={cls} {...others} />
     </Box>
   );
-})(({ theme }) => ({
+})(() => ({
   color: 'white',
   fontWeight: 500,
   lineHeight: '20px',
