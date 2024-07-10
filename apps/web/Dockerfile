@@ -8,7 +8,7 @@ ARG BUILD_ENV
 
 RUN npm i pnpm -g \
     && pnpm i \
-    &&  pnpm build:{BUILD_ENV}
+    &&  pnpm build:${BUILD_ENV}
 
 
 FROM gcr.io/google-containers/nginx:1.7.9
