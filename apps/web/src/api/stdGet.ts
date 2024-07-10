@@ -1,7 +1,6 @@
-import { Envs } from "@/env";
-import { APINames, APIParamsType, Apis, JSONResponse, STDResponse } from "./api.def";
-import { Maybe } from "@/utils";
-
+import { APINames, APIParamsType, Apis, JSONResponse } from './api.def';
+import { Envs } from '@/env';
+import { Maybe } from '@/utils';
 
 export async function stdGet<NAME extends APINames, R>(
   apiName: NAME,
@@ -9,12 +8,13 @@ export async function stdGet<NAME extends APINames, R>(
 ): Promise<Maybe<JSONResponse<R>>> {
   const { url } = Apis[apiName];
   const searchParams = new URLSearchParams();
+  // eslint-disable-next-line guard-for-in
   for (const key in params) {
     searchParams.append(key, String(params[key as keyof typeof params]));
   }
 
   let requestUrl = `${Envs.API_HOST}${url}`;
-  if(searchParams.toString() !== '') {
+  if (searchParams.toString() !== '') {
     requestUrl = `${Envs.API_HOST}${url}?${searchParams.toString()}`;
   }
 
