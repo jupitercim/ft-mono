@@ -1,6 +1,7 @@
 export class Logger {
   private constructor(private name: string) {}
 
+  // @ts-ignore
   public debug(...args: any[]) {
     // eslint-disable-next-line no-console
     console.debug(
