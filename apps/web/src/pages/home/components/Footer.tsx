@@ -50,7 +50,8 @@ const useStyles = makeStyles()(theme => ({
     marginBottom: '36px',
     [theme.breakpoints.down('md')]: {
       maxWidth: '584px',
-      marginBottom: '14px'
+      marginBottom: '14px',
+      padding: '0 15px',
     }
   },
   linkSection: {

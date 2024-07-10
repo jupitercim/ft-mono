@@ -27,9 +27,13 @@ export const Paragraph = ({ ns, iKey }: Props) => {
   );
 };
 
-const useStyles = makeStyles()(() => ({
+const useStyles = makeStyles()((theme) => ({
   p: {
     fontSize: '24px !important',
-    opacity: .5
+    opacity: .7,
+    [theme.breakpoints.down('md')]: {
+      fontSize: '12px !important',
+    }
+
   }
 }));

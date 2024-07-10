@@ -22,9 +22,11 @@ const useStyles = makeStyles()(theme => ({
       textAlign: 'left',
       [theme.breakpoints.down('md')]: {
         textAlign: 'center',
+        marginTop: '20px',
+        fontSize: '26px',
+        marginBottom: 0,
       },
       marginBottom: "56px",
-      fontSize: `56px`,
       width: '100%',
     },
   },
