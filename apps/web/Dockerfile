@@ -4,14 +4,14 @@ WORKDIR /opt
 
 ADD .  /opt
 
+ARG BUILD_ENV
+
 RUN npm i pnpm -g \
     && pnpm i \
-    &&  pnpm build
+    &&  pnpm build:{BUILD_ENV}
 
 
 FROM gcr.io/google-containers/nginx:1.7.9
-
-ARG BUILD_ENV
 
 COPY --from=0 /opt/build /opt/dist
 
