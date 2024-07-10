@@ -2,6 +2,7 @@ import { APIBodyType, APINames } from "@/api/api.def";
 import { stdPost } from "@/api/stdPost";
 import { useCallback, useState } from "react";
 import { useSnackbar } from 'notistack'
+import { Maybe } from "@/utils";
 
 interface PostOptions {
   successMessage?: string
@@ -29,7 +30,7 @@ export const usePost = () => {
         setLoading(false)
       }
     })
-    return result
+    return result as Maybe<R>
   }, [])
 
   return [loading, post] as [boolean, typeof post]

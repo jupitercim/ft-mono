@@ -4,12 +4,10 @@ import { useCallback, useState } from "react";
 import { useSnackbar } from 'notistack'
 import { stdGet } from "@/api/stdGet";
 
-interface GetOptions {
-}
 export const useGet = () => {
 
   const [loading, setLoading] = useState(false)
-  const get = useCallback(async <T extends APINames, R>(api: T, data: APIParamsType<T>, options?: GetOptions) => {
+  const get = useCallback(async <T extends APINames, R>(api: T, data: APIParamsType<T>) => {
     setLoading(true)
     const result = await stdGet<T, R>(api, data)
     return result

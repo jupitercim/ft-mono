@@ -88,7 +88,7 @@ export function createTheme(mode: PaletteMode): Theme {
               '&.MuiButtonBase-root': {
                 '&.Mui-disabled': {
                   backgroundColor: `rgba(255,255,255,.2)`,
-                  color: baseTheme.colors.grey, // Ensure text color is white for visibility
+                  color: baseTheme.colors.gray, // Ensure text color is white for visibility
                 }
               }
             }
