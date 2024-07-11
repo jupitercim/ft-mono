@@ -23,6 +23,7 @@ import { useState } from 'react';
 import { Lang, useLanguage } from '@/hooks/useLanguage';
 import { AnchorNameEnum, anchorNameAtom } from '@/state/view';
 import { useAtom } from 'jotai';
+import { useEvents } from '@/hooks/useEvents';
 
 interface Props {
   className?: string;
@@ -40,6 +41,7 @@ export function Header({ className }: Props): JSX.Element {
   const open = Boolean(anchorEl);
   const lc = useLocation();
   const nav = useNavigate();
+  const events = useEvents();
   const [anchorName, setAnchorName] = useAtom(anchorNameAtom);
   const handleClick = (event: React.MouseEvent<HTMLImageElement>) => {
     setAnchorEl(event.currentTarget);
@@ -55,13 +57,13 @@ export function Header({ className }: Props): JSX.Element {
 
   const { classes, cx } = useStyles();
 
-  const eventPath = '/event';
-  const isEventPage = lc.pathname === eventPath;
+  const eventPathPrefix = '/event';
+  const isEventPage = lc.pathname.includes(eventPathPrefix);
   const navToPageOrSection = (name: AnchorNameEnum) => {
     setOpenDrawer(false);
     setAnchorName(name);
     if (name === AnchorNameEnum.Event) {
-      nav(eventPath);
+      nav(`${eventPathPrefix}/${events[0].id}`);
       return;
     }
     if (isEventPage) {
@@ -77,7 +79,7 @@ export function Header({ className }: Props): JSX.Element {
     },
     {
       title: t('menu.event'),
-      href: eventPath,
+      href: `${eventPathPrefix}/${events[0].id}`,
       icon: eventsSrc,
       anchorName: AnchorNameEnum.Event,
     },
