@@ -1,12 +1,17 @@
 export class Logger {
   private constructor(private name: string) {}
 
+  // @ts-ignore
   public debug(...args: any[]) {
-    console.debug(`%c[${this.name}]`, 'color: blue;font-weight: bold;', ...args)
+    // eslint-disable-next-line no-console
+    console.debug(
+      `%c[${this.name}]`,
+      'color: blue;font-weight: bold;',
+      ...args,
+    );
   }
 
-
   static get(name: string) {
-    return new Logger(name)
+    return new Logger(name);
   }
 }
