@@ -1,4 +1,5 @@
 import { styled, TextField as _TextField, TextFieldProps as _TextFieldProps } from '@mui/material';
+import { forwardRef } from 'react';
 import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()(theme => ({
@@ -28,12 +29,12 @@ const useStyles = makeStyles()(theme => ({
   },
 }));
 
-export const TextField = (props: _TextFieldProps) => {
+export const TextField = forwardRef((props: _TextFieldProps, ref: any) => {
   const { classes, cx } = useStyles();
   const {className, ...others} = props
 
   const cls = cx(classes.root, className)
 
-  return <_TextField className={cls} {...others} />
+  return <_TextField className={cls} ref={ref} {...others} />
 
-}
+})
