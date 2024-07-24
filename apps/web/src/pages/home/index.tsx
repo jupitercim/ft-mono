@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography, useMediaQuery } from '@mui/material';
 import { useAtomValue } from 'jotai';
 import { makeStyles } from 'tss-react/mui';
 
@@ -8,18 +8,23 @@ import { ContactUs } from './components/ContactUs';
 import { ImgContent } from './components/ImgContent';
 import alpineSrc from '@/assets/images/alpine.png';
 import alpineLogoSrc from '@/assets/images/alpine-1.png';
+import alpineLogoHoverSrc from '@/assets/images/alpine-2.png';
 import alpineBgSrc from '@/assets/images/alpine-bg.png';
 import bannerBgSrc from '@/assets/images/banner-bg.jpg';
 import binanceLogoSrc from '@/assets/images/binance-1.png';
+import binanceLogoHoverSrc from '@/assets/images/binance-2.png';
 import communityBgSrc from '@/assets/images/community-bg.png';
 import contactusBgSrc from '@/assets/images/contact-us-bg.png';
 import potroLogoSrc from '@/assets/images/fc-potro-1.png';
+import potroLogoHoverSrc from '@/assets/images/fc-potro-2.png';
 import logoSrc from '@/assets/images/logo.png';
 import missionBgSrc from '@/assets/images/mission-bg.png';
 import portoSrc from '@/assets/images/pc-porto.png';
 import portoBgSrc from '@/assets/images/pc-porto-bg.png';
 import lazioLogoSrc from '@/assets/images/s.s.lazio-1.png';
+import lazioLogoHoverSrc from '@/assets/images/s.s.lazio-2.png';
 import santosLogoSrc from '@/assets/images/santos-1.png';
+import santosLogoHoverSrc from '@/assets/images/santos-2.png';
 import santosSrc from '@/assets/images/santos-fc.png';
 import santosBgSrc from '@/assets/images/santos-fc-bg.png';
 import lazioSrc from '@/assets/images/ss-lazio.png';
@@ -38,7 +43,6 @@ import { anchorNameAtom, AnchorNameEnum } from '@/state/view';
 import { Footer } from './components/Footer';
 import { Team, fetchPriceMap } from '@/api/fetchTeams';
 import { apiGetAtom } from '@/atom/apiGetAtom';
-import { useGet } from '@/hooks/useGet';
 
 export async function loader() {
   await loadNamespaces(['home', 'event']);
@@ -47,7 +51,8 @@ export async function loader() {
 
 export const Component = () => {
   const { t } = useTranslation('home');
-  const { classes, cx } = useStyles();
+  const { classes } = useStyles();
+  const isMobile = useMediaQuery('(max-width:700px)');
   const view = useScrollToView();
   const anchorName = useAtomValue(anchorNameAtom);
   const [teams, setTeams] = useState<
@@ -89,14 +94,6 @@ export const Component = () => {
     });
   }, []);
 
-  const queryData = useAtomValue(
-    apiGetAtom({
-      apiName: 'query',
-      params: { id: '1', name: 'name' },
-    }),
-  );
-  console.log('queryData', queryData);
-
   useEffect(() => {
     if (anchorName) {
       view.scrollTo(anchorName);
@@ -106,22 +103,27 @@ export const Component = () => {
   const partnerships = [
     {
       logo: binanceLogoSrc,
+      hoverLogo: binanceLogoHoverSrc,
       title: t('ps-binance'),
     },
     {
       logo: lazioLogoSrc,
+      hoverLogo: lazioLogoHoverSrc,
       title: t('ps-lazio'),
     },
     {
       logo: potroLogoSrc,
+      hoverLogo: potroLogoHoverSrc,
       title: t('ps-potro'),
     },
     {
       logo: santosLogoSrc,
+      hoverLogo: santosLogoHoverSrc,
       title: t('ps-santos'),
     },
     {
       logo: alpineLogoSrc,
+      hoverLogo: alpineLogoHoverSrc,
       title: t('ps-alpine'),
     },
   ];
@@ -146,6 +148,7 @@ export const Component = () => {
                     sx={{
                       backgroundImage: `url('${team.bg}')`,
                       backgroundSize: 'cover',
+                      backgroundPosition: 'center center',
                     }}
                   >
                     <img src={team.logo} />
@@ -210,7 +213,8 @@ export const Component = () => {
               <Box className={classes.partnershipWrap}>
                 {partnerships.map(ps => (
                   <Box key={ps.logo} className={classes.partnership}>
-                    <img src={ps.logo} />
+                    <img src={isMobile ? ps.hoverLogo : ps.logo} />
+                    <img className="hoverImg" src={ps.hoverLogo} />
                     <Typography className={classes.partnershipName}>
                       {ps.title}
                     </Typography>
@@ -322,8 +326,8 @@ const useStyles = makeStyles()(theme => ({
     '&&': {
       fontSize: '30px',
       lineHeight: '30px',
-      marginTop: '50px',
-      marginBottom: '60px',
+      marginTop: '30px',
+      marginBottom: '20px',
       color: theme.colors.white,
       [theme.breakpoints.down('md')]: {
         fontSize: '16px',
@@ -339,7 +343,7 @@ const useStyles = makeStyles()(theme => ({
     backgroundColor: theme.colors.bg1,
   },
   ourVisionContent: {
-    width: '1395px',
+    width: '1200px',
     margin: 'auto',
     [theme.breakpoints.down('md')]: {
       width: '100%',
@@ -376,7 +380,7 @@ const useStyles = makeStyles()(theme => ({
   partnershipWrap: {
     display: 'grid',
     gridTemplateColumns: 'repeat(5, 1fr)',
-    gap: '102px',
+    gap: '32px',
     marginTop: '100px',
     [theme.breakpoints.down('md')]: {
       gridTemplateColumns: 'repeat(6, 1fr)',
@@ -390,6 +394,17 @@ const useStyles = makeStyles()(theme => ({
     img: {
       width: '140px',
       height: '140px',
+      '&.hoverImg': {
+        display: 'none',
+      },
+    },
+    '&:hover': {
+      img: {
+        display: 'none',
+      },
+      'img.hoverImg': {
+        display: 'inline-block',
+      },
     },
     [theme.breakpoints.down('md')]: {
       gridColumn: 'span 2',

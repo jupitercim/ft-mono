@@ -14,7 +14,7 @@ const useStyles = makeStyles()(theme => ({
     marginTop: '112px',
     [theme.breakpoints.down('md')]: {
       width: '100%',
-      marginTop:0
+      marginTop: 0,
     },
   },
   title: {
@@ -26,7 +26,7 @@ const useStyles = makeStyles()(theme => ({
         fontSize: '26px',
         marginBottom: 0,
       },
-      marginBottom: "56px",
+      marginBottom: '56px',
       width: '100%',
     },
   },
@@ -34,11 +34,9 @@ const useStyles = makeStyles()(theme => ({
 
 const logger = Logger.get('CampaignDetail');
 export const CampaignDetail = () => {
-  const {classes} = useStyles()
-  const {t} = useTranslation('event')
-  const event = useEvent()
-  
-  
+  const { classes } = useStyles();
+  const { t } = useTranslation('event');
+  const event = useEvent();
 
   return (
     <Grid container>
@@ -53,7 +51,7 @@ export const CampaignDetail = () => {
               style={{
                 width: '100%',
               }}
-              src={CampainDetail}
+              src={event.img}
               alt="campaign-detail"
             />
           </Box>

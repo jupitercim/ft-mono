@@ -29,7 +29,7 @@ export const Paragraph = ({ ns, iKey }: Props) => {
 
 const useStyles = makeStyles()((theme) => ({
   p: {
-    fontSize: '24px !important',
+    fontSize: '16px !important',
     opacity: .7,
     [theme.breakpoints.down('md')]: {
       fontSize: '12px !important',

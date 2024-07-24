@@ -22,5 +22,8 @@
   "contact-desc-01": "Launch your token swiftly via FollowerClub",
   "contact-desc-02": "Engage your fans with Blockchain-powered solutions",
   "contact-desc-03": "Connect with fans like never before",
-  "send-message": "Send Message"
+  "send-message": "Send Message",
+  "event-ongoing": "Ongoing",
+  "event-not-start": "Not Start",
+  "event-ended": "Ended"
 }

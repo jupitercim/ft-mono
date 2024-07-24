@@ -9,6 +9,7 @@ import notStartedBgSrc from '@/assets/images/not-started-bg.png';
 import endedBgSrc from '@/assets/images/ended-bg.png';
 import { ReactNode } from 'react';
 import { useEvents } from '@/hooks/useEvents';
+import { useTranslation } from 'react-i18next';
 
 enum EventStatusEnum {
   Ongoing,
@@ -25,11 +26,17 @@ const Event = ({
   title: string;
   status: EventStatusEnum;
 }) => {
-  const { classes, cx } = useStyles();
+  const { t } = useTranslation('home');
+  const { classes } = useStyles();
   const statusMap = {
     [EventStatusEnum.Ongoing]: ongoingBgSrc,
     [EventStatusEnum.NotStarted]: notStartedBgSrc,
     [EventStatusEnum.Ended]: endedBgSrc,
+  };
+  const statusMapText = {
+    [EventStatusEnum.Ongoing]: t('event-ongoing'),
+    [EventStatusEnum.NotStarted]: t('event-not-start'),
+    [EventStatusEnum.Ended]: t('event-ended'),
   };
   return (
     <Box className={classes.event}>
@@ -41,7 +48,7 @@ const Event = ({
             backgroundImage: `url('${statusMap[status]}')`,
           }}
         >
-          Ongoing
+          {statusMapText[status]}
         </span>
       </Box>
     </Box>
@@ -102,7 +109,7 @@ const useStyles = makeStyles()(theme => ({
   eventsWrap: {
     display: 'flex',
     marginTop: '90px',
-    gap: '50px',
+    gap: '30px',
     [theme.breakpoints.down('md')]: {
       marginTop: '30px',
       flexDirection: 'column',
@@ -112,7 +119,7 @@ const useStyles = makeStyles()(theme => ({
   event: {
     display: 'flex',
     flexDirection: 'column',
-    width: '434px',
+    width: '374px',
     img: {
       width: '100%',
     },

@@ -45,7 +45,7 @@ export const ContentSection = forwardRef(
 
 const useStyles = makeStyles()(theme => ({
   content: {
-    width: '1395px',
+    width: '1200px',
     margin: '0 auto',
     paddingTop: '100px',
     paddingBottom: '120px',

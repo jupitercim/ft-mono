@@ -3,22 +3,20 @@ import { CampaignDetail } from '../home/components/CampaignDetail';
 import { Footer } from '../home/components/Footer';
 import { ContentSection } from '@/components/ContentSection';
 import { useTranslation } from 'react-i18next';
-import BannerIMG from '@/assets/images/banner_2.png'
+import BannerIMG from '@/assets/images/banner_2.png';
 import Banner from '@/components/Banner';
-import { useEvents } from '@/hooks/useEvents';
 import { useEvent } from '@/hooks/useEvent';
 import { Events } from '@/components/Events';
 
-
 export async function loader() {
-  await loadNamespaces('event', 'en-US');
+  await loadNamespaces(['event', 'home'], 'en-US');
   return {};
 }
 
 export const Component = () => {
-  const { t } = useTranslation("event")
-  const event = useEvent()
-  
+  const { t } = useTranslation('event');
+  const event = useEvent();
+
   return (
     <div>
       <Banner
