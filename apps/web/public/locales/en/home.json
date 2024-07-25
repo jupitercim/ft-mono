@@ -25,5 +25,14 @@
   "send-message": "Send Message",
   "event-ongoing": "Ongoing",
   "event-not-start": "Not Start",
-  "event-ended": "Ended"
+  "event-ended": "Ended",
+  "welcome": "Welcome to connect with Follower Club",
+  "yourName": "Your Name",
+  "yourEmail": "Your Email",
+  "yourMessage": "Message",
+  "pleaseInput": "Please Input",
+  "uploadFiles": "Upload Files",
+  "nameRequired": "Message is required",
+  "emailRequired": "Message is required",
+  "messageRequired": "Message is required"
 }

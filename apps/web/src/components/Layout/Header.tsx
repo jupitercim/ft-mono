@@ -24,14 +24,20 @@ import { Lang, useLanguage } from '@/hooks/useLanguage';
 import { AnchorNameEnum, anchorNameAtom } from '@/state/view';
 import { useAtom } from 'jotai';
 import { useEvents } from '@/hooks/useEvents';
+import { Locale } from '@/i18n';
 
 interface Props {
   className?: string;
 }
 
 const languages: { label: string; value: Lang }[] = [
-  { label: 'English', value: 'en-US' },
-  { label: '日本語', value: 'jp' },
+  { label: 'English', value: Locale.enUS },
+  { label: '简体中文', value: Locale.zhCN },
+  { label: '繁體中文', value: Locale.zhTC },
+  { label: 'Português', value: Locale.Pt },
+  { label: 'Português (Brasil)', value: Locale.PtBR },
+  { label: 'Italiano', value: Locale.IT },
+  { label: 'Français', value: Locale.FR },
 ];
 
 export function Header({ className }: Props): JSX.Element {

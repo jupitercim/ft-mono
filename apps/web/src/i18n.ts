@@ -4,12 +4,24 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import { detectLanguage } from './hooks/useLanguage';
 
 export enum Locale {
-  enUS = 'en-US',
+  enUS = 'en',
   zhCN = 'zh-CN',
-  jp = 'jp',
+  zhTC = 'zh-TC',
+  Pt = 'Pt',
+  PtBR = 'Pt-BR',
+  IT = 'IT',
+  FR = 'FR',
 }
 
-export const supportedLngs = [Locale.enUS, Locale.zhCN];
+export const supportedLngs = [
+  Locale.enUS,
+  Locale.zhCN,
+  Locale.zhTC,
+  Locale.Pt,
+  Locale.PtBR,
+  Locale.IT,
+  Locale.FR,
+];
 
 export const languageDetector = new LanguageDetector(null, {
   order: ['cookie', 'navigator'],
@@ -22,7 +34,7 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: Locale.enUS,
-    supportedLngs: [Locale.enUS, Locale.jp],
+    supportedLngs,
     interpolation: {
       escapeValue: false, // not needed for react!!
     },

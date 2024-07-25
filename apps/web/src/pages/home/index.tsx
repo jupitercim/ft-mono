@@ -86,7 +86,7 @@ export const Component = () => {
         {
           logo: alpineSrc,
           bg: alpineBgSrc,
-          name: 'BWT Alpine F1 Team',
+          name: 'BWT Alpine F1',
           coinName: 'ALPINE',
           coinPrice: priceMap.ALPINE || 0,
         },

@@ -50,7 +50,7 @@ const Info = () => {
       justifyContent="space-between"
     >
       <Box flex={1}>
-        <h2 className={classes.title}>Welcome to connect with Follower Club</h2>
+        <h2 className={classes.title}>{t('welcome')}</h2>
 
         {lines.map((line, i) => {
           return (

@@ -11,7 +11,6 @@ import { Uploader } from '@/components/form/Uploader';
 import { stdPost } from '@/api/stdPost';
 import { usePost } from '@/hooks/usePost';
 
-
 type FormValues = {
   name: string;
   email: string;
@@ -38,46 +37,45 @@ export const ContactForm: React.FC = () => {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<FormValues>();
-  const [requesting, setRequesting] = useState(false)
-  const [loading, post] = usePost()
-
+  const [requesting, setRequesting] = useState(false);
+  const [loading, post] = usePost();
 
   return (
     <form className={classes.form}>
       <FormControl>
-        <FormLabel isRequired>Your Name</FormLabel>
+        <FormLabel isRequired>{t('yourName')}</FormLabel>
         <TextField
-          placeholder="Please Input"
+          placeholder={t('pleaseInput')}
           {...register('name', { required: true })}
           error={!!errors.name}
-          helperText={errors.name ? 'Name is required' : ''}
+          helperText={errors.name ? t('nameRequired') : ''}
         />
       </FormControl>
 
       <FormControl>
-        <FormLabel isRequired>Your Email</FormLabel>
+        <FormLabel isRequired>{t('yourEmail')}</FormLabel>
         <TextField
-          placeholder="Please Input"
+          placeholder={t('pleaseInput')}
           {...register('email', { required: true })}
           error={!!errors.email}
-          helperText={errors.email ? 'Email is required' : ''}
+          helperText={errors.email ? t('emailRequired') : ''}
         />
       </FormControl>
 
       <FormControl>
-        <FormLabel isRequired>Message</FormLabel>
+        <FormLabel isRequired>{t('yourMessage')}</FormLabel>
         <TextField
-          placeholder="Please Input"
+          placeholder={t('pleaseInput')}
           multiline
           rows={4}
           {...register('message', { required: true })}
           error={!!errors.message}
-          helperText={errors.message ? 'Message is required' : ''}
+          helperText={errors.message ? t('messageRequired') : ''}
         />
       </FormControl>
 
       <FormControl>
-        <FormLabel>Upload Files</FormLabel>
+        <FormLabel>{t('uploadFiles')}</FormLabel>
         <Uploader
           onChange={files => {
             setValue('files', files);
