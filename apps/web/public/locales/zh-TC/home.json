@@ -23,7 +23,16 @@
   "contact-desc-02": "通過區塊鏈驅動的解決方案與您的粉絲互動",
   "contact-desc-03": "以前所未有的方式與粉絲聯繫",
   "send-message": "發送消息",
-  "event-ongoing": "進行中",
+  "event-ongoing ": "進行中，",
   "event-not-start": "未開始",
-  "event-ended": "已結束"
+  "event-ended": "已結束",
+  "weclome": "欢迎聯絡Follower Club",
+  "yourName": "您的名字",
+  "yourEmail": "您的郵箱",
+  "yourMessage": "信息",
+  "pleaseInput": "請輸入",
+  "uploadFiles": "上傳文檔",
+  "nameRequired": "需要鍵入信息",
+  "emailRequired": "需要鍵入信息",
+  "messageRequired": "需要鍵入信息"
 }

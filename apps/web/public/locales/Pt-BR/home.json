@@ -23,7 +23,16 @@
   "contact-desc-02": "Engaje seus fãs com soluções baseadas em blockchain",
   "contact-desc-03": "Conecte-se com os fãs como nunca antes",
   "send-message": "Enviar Mensagem",
-  "event-ongoing": "Em andamento",
+  "event-ongoing ": "Em andamento,",
   "event-not-start": "Não Iniciado",
-  "event-ended": "Encerrado"
+  "event-ended": "Encerrado",
+  "weclome": "Bem-vindo ao Follower Club",
+  "yourName": "Seu nome",
+  "yourEmail": "Seu e-mail",
+  "yourMessage": "Mensagem",
+  "pleaseInput": "Por favor, insira",
+  "uploadFiles": "Carregar documento",
+  "nameRequired": "Necessário digitar a informação",
+  "emailRequired": "Necessário digitar a informação",
+  "messageRequired": "Necessário digitar a informação"
 }

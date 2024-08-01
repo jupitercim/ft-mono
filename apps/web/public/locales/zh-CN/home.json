@@ -23,7 +23,16 @@
   "contact-desc-02": "通过区块链驱动的解决方案与您的粉丝互动",
   "contact-desc-03": "以前所未有的方式与粉丝联系",
   "send-message": "发送消息",
-  "event-ongoing": "进行中",
+  "event-ongoing ": "进行中，",
   "event-not-start": "未开始",
-  "event-ended": "已结束"
+  "event-ended": "已结束",
+  "weclome": "欢迎联络Follower Club",
+  "yourName": "您的名字",
+  "yourEmail": "您的邮箱",
+  "yourMessage": "信息",
+  "pleaseInput": "请输入",
+  "uploadFiles": "上传文档",
+  "nameRequired": "需要键入信息",
+  "emailRequired": "需要键入信息",
+  "messageRequired": "需要键入信息"
 }
