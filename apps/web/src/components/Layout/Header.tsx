@@ -68,11 +68,7 @@ export function Header({ className }: Props): JSX.Element {
   const navToPageOrSection = (name: AnchorNameEnum) => {
     setOpenDrawer(false);
     setAnchorName(name);
-    if (name === AnchorNameEnum.Event) {
-      nav(`${eventPathPrefix}/${events[0].id}`);
-      return;
-    }
-    if (isEventPage) {
+    if (isEventPage && name !== AnchorNameEnum.Event) {
       nav('/');
     }
   };
@@ -85,7 +81,6 @@ export function Header({ className }: Props): JSX.Element {
     },
     {
       title: t('menu.event'),
-      href: `${eventPathPrefix}/${events[0].id}`,
       icon: eventsSrc,
       anchorName: AnchorNameEnum.Event,
     },

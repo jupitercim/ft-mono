@@ -38,6 +38,8 @@ export const CampaignDetail = () => {
   const { t } = useTranslation('event');
   const event = useEvent();
 
+  console.log("event", event)
+
   return (
     <Grid container>
       <Grid item xs={12} md={5}>

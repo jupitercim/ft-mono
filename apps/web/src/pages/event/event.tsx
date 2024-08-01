@@ -7,15 +7,30 @@ import BannerIMG from '@/assets/images/banner_2.png';
 import Banner from '@/components/Banner';
 import { useEvent } from '@/hooks/useEvent';
 import { Events } from '@/components/Events';
+import ScrollToView, {
+  ScrollToViewItem,
+  useScrollToView,
+} from '@/components/ScrollToView';
+import { AnchorNameEnum, anchorNameAtom } from '@/state/view';
+import { useEffect } from 'react';
+import { useAtomValue } from 'jotai';
 
 export async function loader() {
-  await loadNamespaces(['event', 'home'], 'en-US');
+  await loadNamespaces(['event', 'home']);
   return {};
 }
 
 export const Component = () => {
   const { t } = useTranslation('event');
   const event = useEvent();
+  const view = useScrollToView();
+  const anchorName = useAtomValue(anchorNameAtom);
+
+  useEffect(() => {
+    if (anchorName) {
+      view.scrollTo(anchorName);
+    }
+  }, [anchorName]);
 
   return (
     <div>
@@ -24,15 +39,18 @@ export const Component = () => {
         title={event.title}
         subtitle={`${event.start} ~ ${event.end}`}
       />
+      <ScrollToView scrollToView={view}>
+        <ContentSection>
+          <CampaignDetail />
+        </ContentSection>
 
-      <ContentSection>
-        <CampaignDetail />
-      </ContentSection>
-
-      <ContentSection title={t('event')} subtitle={t('eventSubtitle')}>
-        <Events />
-      </ContentSection>
-      <Footer />
+        <ScrollToViewItem anchorName={AnchorNameEnum.Event}>
+          <ContentSection title={t('event')} subtitle={t('eventSubtitle')}>
+            <Events />
+          </ContentSection>
+        </ScrollToViewItem>
+        <Footer />
+      </ScrollToView>
     </div>
   );
 };
