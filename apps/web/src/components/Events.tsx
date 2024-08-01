@@ -33,6 +33,7 @@ const Event = ({
     [EventStatusEnum.NotStarted]: notStartedBgSrc,
     [EventStatusEnum.Ended]: endedBgSrc,
   };
+
   const statusMapText = {
     [EventStatusEnum.Ongoing]: t('event-ongoing'),
     [EventStatusEnum.NotStarted]: t('event-not-start'),
