@@ -11,7 +11,7 @@ export function useEvents() {
     {
       id: 100001,
       img: events1Src,
-      title: t('eventTitle1', {ns: 'event'}),
+      title: t('eventTitle1'),
       desc: t('eventDesc1'),
       status: EventStatusEnum.Ongoing,
       start: 1720585595785,
@@ -36,7 +36,6 @@ export function useEvents() {
       end: 1722595595785,
     },
   ];
-  console.log('events', events);
 
   return events;
 }

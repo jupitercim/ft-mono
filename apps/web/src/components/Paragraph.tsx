@@ -23,7 +23,13 @@ export const Paragraph = ({ ns, iKey }: Props) => {
           h3: <h3 />,
           a: <a />,
           // space
-          s: <i> </i>,
+          s: (
+            <i
+              style={{
+                paddingLeft: '4px',
+              }}
+            />
+          ),
         }}
       />
     </Typography>

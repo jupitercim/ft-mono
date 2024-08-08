@@ -21,7 +21,7 @@ export async function loader() {
 }
 
 export const Component = () => {
-  const { t } = useTranslation('event');
+  const { t } = useTranslation(['event', 'home']);
   const event = useEvent();
   const view = useScrollToView();
   const anchorName = useAtomValue(anchorNameAtom);
@@ -45,7 +45,10 @@ export const Component = () => {
         </ContentSection>
 
         <ScrollToViewItem anchorName={AnchorNameEnum.Event}>
-          <ContentSection title={t('event')} subtitle={t('eventSubtitle')}>
+          <ContentSection
+            title={t('event', { ns: 'home' })}
+            subtitle={t('eventSubtitle', { ns: 'home' })}
+          >
             <Events />
           </ContentSection>
         </ScrollToViewItem>

@@ -1,0 +1,17 @@
+{
+  "excludeSheetNames": [
+    "Sheet1"
+  ],
+  "pathPattern": "./public/locales/{lang}/{namespace}.json",
+  "platform": "web",
+  "sourceLanguage": "en",
+  "languages": [
+    "en",
+    "zh-CN",
+    "zh-TC",
+    "Pt",
+    "Pt-BR",
+    "IT",
+    "FR"
+  ]
+}
