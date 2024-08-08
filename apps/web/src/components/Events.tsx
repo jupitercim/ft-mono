@@ -18,10 +18,12 @@ enum EventStatusEnum {
 }
 
 const Event = ({
+  id,
   src,
   title,
   status,
 }: {
+  id: number;
   src: string;
   title: string;
   status: EventStatusEnum;
@@ -39,8 +41,14 @@ const Event = ({
     [EventStatusEnum.NotStarted]: t('event-not-start'),
     [EventStatusEnum.Ended]: t('event-ended'),
   };
+  console.log(id, '==id');
   return (
-    <Box className={classes.event}>
+    <Box
+      className={classes.event}
+      onClick={() => {
+        window.open(`/event/${id}`);
+      }}
+    >
       <img src={src} />
       <Typography>{title}</Typography>
       <Box className={classes.eventStatus}>
@@ -82,11 +90,13 @@ export const Events = () => {
             sx={{
               cursor: 'pointer',
             }}
-            onClick={() => {
-              window.open(`/event/${evt.id}`);
-            }}
           >
-            <Event src={evt.img} title={evt.title} status={evt.status} />
+            <Event
+              id={evt.id}
+              src={evt.img}
+              title={evt.title}
+              status={evt.status}
+            />
           </Box>
         ))}
       </Slider>
@@ -96,6 +106,7 @@ export const Events = () => {
     eventsNode = events.map(evt => (
       <Event
         key={evt.title}
+        id={evt.id}
         src={evt.img}
         title={evt.title}
         status={evt.status}
