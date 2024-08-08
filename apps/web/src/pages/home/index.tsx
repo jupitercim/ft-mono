@@ -357,10 +357,12 @@ const useStyles = makeStyles()(theme => ({
   },
   joinNow: {
     '&&': {
-      marginTop: '46px',
+      marginTop: '36px',
+      fontSize: '16px',
+      padding: '6px 10px 6px 6px',
       img: {
-        width: '30px',
-        height: '30px',
+        width: '24px',
+        height: '24px',
         marginRight: '10px',
       },
       [theme.breakpoints.down('md')]: {
@@ -370,7 +372,7 @@ const useStyles = makeStyles()(theme => ({
           height: '25px',
           marginRight: '8px',
         },
-        fontSize: '20px',
+        fontSize: '18px',
       },
     },
   },
