@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   Drawer,
   List,
@@ -143,17 +143,11 @@ export function Header({ className }: Props): JSX.Element {
       </Drawer>
 
       <Box className={classes.menu}>
-        {menus.map(m =>
-          m.href ? (
-            <NavLink key={m.title} to={m.href}>
-              {m.title}
-            </NavLink>
-          ) : (
-            <Box key={m.title} onClick={() => navToPageOrSection(m.anchorName)}>
-              {m.title}
-            </Box>
-          ),
-        )}
+        {menus.map(m => (
+          <Box key={m.title} onClick={() => navToPageOrSection(m.anchorName)}>
+            {m.title}
+          </Box>
+        ))}
       </Box>
       <Box
         display="flex"
