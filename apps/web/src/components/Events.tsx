@@ -57,7 +57,7 @@ const Event = ({
 };
 
 export const Events = () => {
-  const { classes, cx } = useStyles();
+  const { classes } = useStyles();
 
   const isMobile = useMediaQuery('(max-width:700px)');
 
