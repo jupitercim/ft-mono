@@ -41,7 +41,7 @@ const Event = ({
     [EventStatusEnum.NotStarted]: t('event-not-start'),
     [EventStatusEnum.Ended]: t('event-ended'),
   };
-  console.log(id, '==id');
+
   return (
     <Box
       className={classes.event}
@@ -136,8 +136,8 @@ const useStyles = makeStyles()(theme => ({
       width: '100%',
     },
     p: {
-      fontSize: '30px',
-      lineHeight: '35px',
+      fontSize: '22px',
+      lineHeight: '32px',
       fontWeight: '500',
       color: theme.colors.white,
       marginTop: '30px',
@@ -153,7 +153,7 @@ const useStyles = makeStyles()(theme => ({
   },
   eventStatus: {
     display: 'inline-block',
-    marginTop: '40px',
+    marginTop: '28px',
     span: {
       display: 'inline-block',
       minWidth: '155px',
