@@ -83,6 +83,6 @@ const useStyles = makeStyles()(theme => ({
   fticons: {},
   fticon: {
     width: '16px',
-    opacity: 0.7,
+    opacity: 0.9,
   },
 }));

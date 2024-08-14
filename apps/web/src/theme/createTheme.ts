@@ -55,8 +55,8 @@ export function createTheme(mode: PaletteMode): Theme {
       MuiTypography: {
         styleOverrides: {
           ftTitle: {
-            fontSize: '56px',
-            lineHeight: '56px',
+            fontSize: '36px',
+            lineHeight: '40px',
             color: baseTheme.colors.white,
           },
           ftSubtitle: {

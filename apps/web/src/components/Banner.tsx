@@ -38,7 +38,7 @@ const useStyles = makeStyles()(theme => ({
   },
   subtitle: {
     '&&': {
-      opacity: 0.7,
+      opacity: 0.9,
       fontFamily: 'San Francisco Display',
       color: '#FFFFFF',
       fontWeight: 100,

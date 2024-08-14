@@ -42,7 +42,6 @@ import { loadNamespaces } from '@/i18n';
 import { anchorNameAtom, AnchorNameEnum } from '@/state/view';
 import { Footer } from './components/Footer';
 import { Team, fetchPriceMap } from '@/api/fetchTeams';
-import { apiGetAtom } from '@/atom/apiGetAtom';
 
 export async function loader() {
   await loadNamespaces(['home', 'event']);

@@ -31,7 +31,7 @@ export function Layout({
 }
 
 export const layoutLoader: LoaderFunction = async () => {
-  await loadNamespaces(['layout', 'shared'], 'en-US');
+  await loadNamespaces(['layout', 'shared']);
   return {};
 };
 

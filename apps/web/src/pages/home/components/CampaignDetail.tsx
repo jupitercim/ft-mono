@@ -30,6 +30,9 @@ const useStyles = makeStyles()(theme => ({
       width: '100%',
     },
   },
+  p: {
+    fontSize: '14px !important',
+  },
 }));
 
 const logger = Logger.get('CampaignDetail');
@@ -37,8 +40,6 @@ export const CampaignDetail = () => {
   const { classes } = useStyles();
   const { t } = useTranslation('event');
   const event = useEvent();
-
-  console.log("event", event)
 
   return (
     <Grid container>
@@ -65,7 +66,11 @@ export const CampaignDetail = () => {
           {t('campaign-detail')}
         </Typography>
 
-        <Paragraph ns={'event'} iKey={event.desc}></Paragraph>
+        <Paragraph
+          ns={'event'}
+          iKey={event.desc}
+          className={classes.p}
+        ></Paragraph>
       </Grid>
     </Grid>
   );

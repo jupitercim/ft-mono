@@ -76,7 +76,7 @@ const useStyles = makeStyles()(theme => ({
   desc: {
     '&&': {
       flex: 1,
-      paddingTop: '30px',
+      paddingTop: '8px',
       fontSize: '16px',
       lineHeight: '22px',
       [theme.breakpoints.down('md')]: {

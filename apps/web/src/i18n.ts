@@ -8,7 +8,7 @@ export enum Locale {
   zhCN = 'zh-CN',
   zhTC = 'zh-TC',
   Pt = 'Pt',
-  PtBR = 'Pt-BR',
+  PtBR = 'PtBR',
   IT = 'IT',
   FR = 'FR',
 }

@@ -47,7 +47,6 @@ export function Header({ className }: Props): JSX.Element {
   const open = Boolean(anchorEl);
   const lc = useLocation();
   const nav = useNavigate();
-  const events = useEvents();
   const [anchorName, setAnchorName] = useAtom(anchorNameAtom);
   const handleClick = (event: React.MouseEvent<HTMLImageElement>) => {
     setAnchorEl(event.currentTarget);
@@ -294,7 +293,7 @@ const useStyles = makeStyles()(theme => ({
   soccer: {
     width: '30px',
     height: '30px',
-    opacity: '0.7',
+    opacity: '0.9',
     transition: 'all 200ms',
     transform: 'rotate(0deg)',
     cursor: 'pointer',

@@ -5,14 +5,19 @@ import { Trans, useTranslation } from 'react-i18next';
 interface Props {
   ns?: string | string[];
   iKey: string;
+  className?: string;
 }
 
-export const Paragraph = ({ ns, iKey }: Props) => {
+export const Paragraph = ({ ns, iKey, className }: Props) => {
   const { classes, cx } = useStyles();
   const { t } = useTranslation(ns);
 
   return (
-    <Typography component={'p'} variant="body1" className={classes.p}>
+    <Typography
+      component={'p'}
+      variant="body1"
+      className={cx(classes.p, className)}
+    >
       <Trans
         t={t}
         i18nKey={iKey}
@@ -37,10 +42,14 @@ export const Paragraph = ({ ns, iKey }: Props) => {
 
 const useStyles = makeStyles()(theme => ({
   p: {
-    fontSize: '12px !important',
-    opacity: 0.7,
+    fontSize: '14px !important',
+    opacity: 0.9,
     [theme.breakpoints.down('md')]: {
       fontSize: '12px !important',
+    },
+    a: {
+      fontWeight: 700,
+      color: theme.colors.white,
     },
   },
 }));
