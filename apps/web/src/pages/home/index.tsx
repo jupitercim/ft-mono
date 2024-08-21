@@ -104,26 +104,31 @@ export const Component = () => {
       logo: binanceLogoSrc,
       hoverLogo: binanceLogoHoverSrc,
       title: t('ps-binance'),
+      link: 'https://www.binance.com/',
     },
     {
       logo: lazioLogoSrc,
       hoverLogo: lazioLogoHoverSrc,
       title: t('ps-lazio'),
+      link: 'https://www.sslazio.it/en',
     },
     {
       logo: potroLogoSrc,
       hoverLogo: potroLogoHoverSrc,
       title: t('ps-potro'),
+      link: 'https://www.fcporto.pt/en',
     },
     {
       logo: santosLogoSrc,
       hoverLogo: santosLogoHoverSrc,
       title: t('ps-santos'),
+      link: 'https://www.santosfc.com.br/en/home/',
     },
     {
       logo: alpineLogoSrc,
       hoverLogo: alpineLogoHoverSrc,
       title: t('ps-alpine'),
+      link: 'https://www.alpine-cars.co.uk/formula-1/f1-team.html',
     },
   ];
 
@@ -211,7 +216,11 @@ export const Component = () => {
             >
               <Box className={classes.partnershipWrap}>
                 {partnerships.map(ps => (
-                  <Box key={ps.logo} className={classes.partnership}>
+                  <Box
+                    key={ps.logo}
+                    className={classes.partnership}
+                    onClick={() => window.open(ps.link)}
+                  >
                     <img src={isMobile ? ps.hoverLogo : ps.logo} />
                     <img className="hoverImg" src={ps.hoverLogo} />
                     <Typography className={classes.partnershipName}>
@@ -392,6 +401,7 @@ const useStyles = makeStyles()(theme => ({
     },
   },
   partnership: {
+    cursor: 'pointer',
     img: {
       width: '140px',
       height: '140px',

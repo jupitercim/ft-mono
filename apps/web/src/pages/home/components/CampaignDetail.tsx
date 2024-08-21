@@ -31,7 +31,7 @@ const useStyles = makeStyles()(theme => ({
     },
   },
   p: {
-    fontSize: '14px !important',
+    fontSize: '16px !important',
   },
 }));
 

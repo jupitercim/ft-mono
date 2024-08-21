@@ -131,23 +131,26 @@ const useStyles = makeStyles()(theme => ({
   event: {
     display: 'flex',
     flexDirection: 'column',
-    width: '374px',
+    margin: '0 8px',
     img: {
       width: '100%',
     },
     p: {
       fontSize: '22px',
       lineHeight: '32px',
+      minHeight: '64px',
       fontWeight: '500',
       color: theme.colors.white,
       marginTop: '30px',
     },
     [theme.breakpoints.down('md')]: {
       width: '100%',
+      margin: '0',
       p: {
         fontSize: '17px',
         lineHeight: '22px',
         marginTop: '10px',
+        minHeight: 'auto',
       },
     },
   },
